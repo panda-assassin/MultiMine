@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultiMineCode;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,19 @@ namespace MultiMine
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        Connector connector;
+
         public MainWindow()
         {
             InitializeComponent();
+            connector = Connector.GetInstance();
+        }
+
+
+        private void TestSendButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.connector.sendTestData(TestTextBox.Text);
         }
     }
 }
