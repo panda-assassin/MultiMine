@@ -58,6 +58,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="CreateRoomMultiPlayer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="CreateRoomSinglePlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -71,6 +75,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Connector.cs" />
+    <Compile Include="CreateRoomMultiPlayer.xaml.cs">
+      <DependentUpon>CreateRoomMultiPlayer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CreateRoomSinglePlayer.xaml.cs">
       <DependentUpon>CreateRoomSinglePlayer.xaml</DependentUpon>
     </Compile>

@@ -16,8 +16,8 @@ namespace MultiMine {
     /// <summary>
     /// Interaction logic for CreateRoomSinglePlayer.xaml
     /// </summary>
-    public partial class CreateRoomSinglePlayer : Window {
-        public CreateRoomSinglePlayer()
+    public partial class CreateRoomMultiPlayer : Window {
+        public CreateRoomMultiPlayer()
         {
             InitializeComponent();
         }
@@ -36,7 +36,7 @@ namespace MultiMine {
             mainWindow.Show();
         }
 
-        private void DifficultyBox_Copy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PlayerCountBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

@@ -43,6 +43,10 @@ namespace MultiMine
         private void MultiPlayer_Click(object sender, RoutedEventArgs e)
         {
             UserNamePopUp.IsOpen = true;
+        }
+
+        private void StartMultiMineGame_Click(object sender, RoutedEventArgs e)
+        {
             //TODO: Start create room_multiplayer
         }
     }

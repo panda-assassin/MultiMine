@@ -22,7 +22,7 @@
                 <StackPanel Orientation="Horizontal" Background="Black">
                     <Label Content="Username:" Background="White"></Label>
                 <TextBox x:Name="UserNameTextBox" Text="Username" ></TextBox>
-                <Button x:Name="StartMultiMineGame" Content="Start Game!"></Button>
+                <Button x:Name="StartMultiMineGame" Content="Start Game!" Click="StartMultiMineGame_Click"></Button>
             </StackPanel>
             </Border>
 
