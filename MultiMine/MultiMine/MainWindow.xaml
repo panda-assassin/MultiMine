@@ -9,6 +9,23 @@
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="253,59,0,268" TextWrapping="Wrap" Text="MULTIMINE" VerticalAlignment="Center" Height="92" Width="309" FontSize = "50"/>
         <Button  x:Name="SinglePlayer" Content="Singleplayer" HorizontalAlignment="Left" Margin="122,176,0,0" VerticalAlignment="Top" Width="204" Height="77" FontSize="30" Click="SinglePlayer_Click"/>
-        <Button  x:Name="MultiPlayer" Content="Multiplayer" HorizontalAlignment="Left" Margin="430,176,0,0" VerticalAlignment="Top" Width="204" Height="77" FontSize="30" Click="MultiPlayer_Click"/>
+        <Button  x:Name="MultiPlayer" Content="Multiplayer" HorizontalAlignment="Left" Margin="430,176,0,0" VerticalAlignment="Top" Width="204" Height="77" FontSize="30" Click="MultiPlayer_Click">        </Button>
+         
+            <Popup Name="UserNamePopUp" IsOpen="False" AllowsTransparency="True" PopupAnimation="Slide" StaysOpen="False"
+      
+                    Placement="Center">
+            <Border CornerRadius="6"
+                BorderBrush="Gray"
+                Background="LightGray"
+                BorderThickness="1"
+                Padding="1">
+                <StackPanel Orientation="Horizontal" Background="Black">
+                    <Label Content="Username:" Background="White"></Label>
+                <TextBox x:Name="UserNameTextBox" Text="Username" ></TextBox>
+                <Button x:Name="StartMultiMineGame" Content="Start Game!"></Button>
+            </StackPanel>
+            </Border>
+
+        </Popup>
     </Grid>
 </Window>
