@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="253,156,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Name="TestTextBox"/>
-        <Button Content="Send" HorizontalAlignment="Left" Margin="159,159,0,0" VerticalAlignment="Top" Width="75" Name="TestSendButton" Click="TestSendButton_Click"/>
+        <TextBlock HorizontalAlignment="Left" Margin="253,59,0,268" TextWrapping="Wrap" Text="MULTIMINE" VerticalAlignment="Center" Height="92" Width="309" FontSize = "50"/>
+        <Button  x:Name="SinglePlayer" Content="Singleplayer" HorizontalAlignment="Left" Margin="122,176,0,0" VerticalAlignment="Top" Width="204" Height="77" FontSize="30" Click="SinglePlayer_Click"/>
+        <Button  x:Name="MultiPlayer" Content="Multiplayer" HorizontalAlignment="Left" Margin="430,176,0,0" VerticalAlignment="Top" Width="204" Height="77" FontSize="30" Click="MultiPlayer_Click"/>
     </Grid>
 </Window>

@@ -16,6 +16,8 @@ namespace MultiMineServer {
         private Server server;
         private NetworkStream stream;
 
+        private int uniqueID { get; set; }
+
         private byte[] buffer = new byte[1024];
 
         string totalBuffer = "";

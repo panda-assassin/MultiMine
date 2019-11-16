@@ -27,13 +27,22 @@ namespace MultiMine
         public MainWindow()
         {
             InitializeComponent();
-            connector = Connector.GetInstance();
+            //connector = Connector.GetInstance();
         }
 
-
-        private void TestSendButton_Click(object sender, RoutedEventArgs e)
+        private void SinglePlayer_Click(object sender, RoutedEventArgs e)
         {
-            this.connector.sendTestData(TestTextBox.Text);
+
+            this.Hide();
+            CreateRoomSinglePlayer singlePlayerRoom = new CreateRoomSinglePlayer();
+            singlePlayerRoom.Closed += (s, args) => this.Close();
+            singlePlayerRoom.Show();
+            //TODO: Start create room_singleplayer
+        }
+
+        private void MultiPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO: Start create room_multiplayer
         }
     }
 }
