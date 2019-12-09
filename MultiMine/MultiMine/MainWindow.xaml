@@ -7,6 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Button Content="Start!" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="343,182,0,0" Click="Button_Click"/>
+        <DockPanel VerticalAlignment="Center" Margin="233,223,261,172" >
+            <TextBox Text="{Binding ElementName=slValue, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="40"/>
+            <Slider Minimum="5" Maximum="100" TickPlacement="BottomRight" TickFrequency="5" IsSnapToTickEnabled="True" Name="slValue" Width="246" Value="10" />
+        </DockPanel>
+
     </Grid>
 </Window>

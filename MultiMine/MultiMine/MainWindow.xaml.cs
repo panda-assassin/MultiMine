@@ -24,5 +24,13 @@ namespace MultiMine
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            GameWindow gameWindow = new GameWindow();
+            gameWindow.Closed += (s, args) => this.Close();
+            gameWindow.Show();
+        }
     }
 }
