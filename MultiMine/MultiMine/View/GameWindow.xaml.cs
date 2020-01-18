@@ -10,27 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace MultiMine
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for GameWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class GameWindow : Window
     {
-        public MainWindow()
+        private int size;
+        private int percentageMines;
+        public GameWindow(int size)
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Hide();
-            GameWindow gameWindow = new GameWindow();
-            gameWindow.Closed += (s, args) => this.Close();
-            gameWindow.Show();
+            this.size = size;
+            this.percentageMines = 20; //hardcoded difficulty TODO: changable
+           
         }
     }
 }
