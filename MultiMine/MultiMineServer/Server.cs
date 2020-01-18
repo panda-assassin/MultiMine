@@ -15,9 +15,7 @@ namespace MultiMineServer {
         internal List<Client> Clients { get => clients; set => clients = value; }
 
         public Server()
-        {
-            listener = new TcpListener(IPAddress.Any, 1234);
-            listener.Start();
+        { 
             StartServer();
 
             Console.WriteLine("Server started and listening.");
@@ -40,6 +38,8 @@ namespace MultiMineServer {
 
         public void StartServer()
         {
+            listener = new TcpListener(IPAddress.Any, 1234);
+            listener.Start();
             listener.BeginAcceptTcpClient(new AsyncCallback(OnConnect), null);
         }
 

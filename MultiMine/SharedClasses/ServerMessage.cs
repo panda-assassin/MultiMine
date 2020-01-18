@@ -1,15 +1,16 @@
 ﻿namespace SharedClasses {
     public class ServerMessage {
 
-        public string Data { get; set; }
+        public byte[] Data { get; set; }
         public MessageIDs Id { get; set; }
 
-        public ServerMessage(MessageIDs Id, string Data)
+        public ServerMessage(MessageIDs Id, byte[] Data)
         {
             this.Id = Id;
             this.Data = Data;
         }
     }
+
     public enum MessageIDs {
         //ALL EXAMPLES!!! Use Better names later on
         SendTestData
