@@ -34,9 +34,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>MultiMine.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -57,11 +61,11 @@
     </ApplicationDefinition>
     <Compile Include="Model\GameBoard.cs" />
     <Compile Include="Model\Tile.cs" />
-    <Page Include="GameWindow.xaml">
+    <Page Include="View\GameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -69,10 +73,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GameWindow.xaml.cs">
+    <Compile Include="View\GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -102,6 +106,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\EmptyTile_0.png" />
+    <Resource Include="Resources\EmptyTile_1.png" />
+    <Resource Include="Resources\EmptyTile_2.png" />
+    <Resource Include="Resources\EmptyTile_3.png" />
+    <Resource Include="Resources\EmptyTile_4.png" />
+    <Resource Include="Resources\EmptyTile_5.png" />
+    <Resource Include="Resources\EmptyTile_6.png" />
+    <Resource Include="Resources\EmptyTile_8.png" />
+    <Resource Include="Resources\FalseFlaggedTile.png" />
+    <Resource Include="Resources\Flag.png" />
+    <Resource Include="Resources\GameButton.png" />
+    <Resource Include="Resources\Mine.png" />
+    <Resource Include="Resources\Tile.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
