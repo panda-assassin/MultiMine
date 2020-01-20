@@ -1,4 +1,5 @@
-﻿using MultiMine.Model;
+﻿using MultiMine.Controller;
+using MultiMine.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +14,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace MultiMine
-{
+namespace MultiMine {
     /// <summary>
     /// Interaction logic for GameWindow.xaml
     /// </summary>
-    public partial class GameWindow : Window
-    {
+    public partial class GameWindow : Window, GameBoardListener {
         private int size;
         private int percentageMines;
-        private GameBoard gameBoard;
+
+        private GameBoardManager manager;
 
         private RowDefinition[] rows;
         private ColumnDefinition[] columns;
@@ -37,13 +37,11 @@ namespace MultiMine
             this.Height = (size + 3) * 32;
 
             //Initializing gameBoard
-            gameBoard = new GameBoard(size, size, size * size * (percentageMines / 100));
+            GameBoard gameBoard = new GameBoard(size, size, size * size * (percentageMines / 100));
+            manager = new GameBoardManager(gameBoard, this);
 
             //Initializing tileGrid
-            
             mainGrid.Children.Clear();
-
-
             loadGrid();
 
         }
@@ -59,7 +57,7 @@ namespace MultiMine
             rows = new RowDefinition[size];
             columns = new ColumnDefinition[size];
 
-
+            int counter = 0;
             for (int i = 0; i < size; i++)
             {
                 rows[i] = new RowDefinition();
@@ -68,16 +66,21 @@ namespace MultiMine
                 rows[i].Height = new GridLength(32);
                 for (int j = 0; j < size; j++)
                 {
+
                     columns[j] = new ColumnDefinition();
                     mainGrid.ColumnDefinitions.Add(columns[j]);
                     // Setting Collumn width
                     columns[j].Width = new GridLength(32);
 
+
+                    // Creating Tile
+                    Tile tile = new Tile(counter, i, j);
+                    counter++;
                     // Creating image
                     Image image = new Image();
                     BitmapImage bitmap = new BitmapImage();
                     bitmap.BeginInit();
-                    bitmap.UriSource = new Uri((gameBoard.Tiles[i + j].imagePath), UriKind.Relative);
+                    bitmap.UriSource = new Uri((manager.getGameBoard().Tiles[tile.iD].imagePath), UriKind.Relative);
                     bitmap.CacheOption = BitmapCacheOption.OnLoad;
                     bitmap.EndInit();
                     image.Source = bitmap;
@@ -87,13 +90,49 @@ namespace MultiMine
                     button.Height = 32;
                     button.Width = 32;
                     button.Content = image;
-                    
+                    button.Tag = i + "+" + j;
+
+
+                    // Setting button event listener
+                    button.Click += new RoutedEventHandler(onButtonClick);
+                    button.MouseRightButtonDown += new MouseButtonEventHandler(onRightButtonCLick);
+
+
+
                     // Adding button to Grid
                     Grid.SetRow(button, i);
                     Grid.SetColumn(button, j);
                     mainGrid.Children.Add(button);
+
                 }
             }
+        }
+
+        private void onButtonClick(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            textField.Text = "Left click:" + button.Tag;
+            string[] tag = button.Tag.ToString().Split("+".ToCharArray());
+            int x = Convert.ToInt32(tag[0]);
+            int y = Convert.ToInt32(tag[1]);
+
+            manager.onLeftClick(x,y);
+        }
+
+        private void onRightButtonCLick(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            textField.Text = "Right click:" + button.Tag;
+            string[] tag = button.Tag.ToString().Split("+".ToCharArray());
+            int x = Convert.ToInt32(tag[0]);
+            int y = Convert.ToInt32(tag[1]);
+
+            manager.onRightClick(x, y);
+        }
+
+        public void gameBoardUpdated()
+        {
+            loadGrid();
         }
     }
 }

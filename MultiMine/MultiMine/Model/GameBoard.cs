@@ -13,13 +13,13 @@ namespace MultiMine.Model
         Failed,
         Completed
     }
-    class GameBoard
-    {
+    class GameBoard {
         public int Width { get; set; }
         public int Height { get; set; }
         public int MineCount { get; set; }
         public List<Tile> Tiles { get; set; }
         public GameStatus Status { get; set; }
+        public Boolean firstMove { get; set; }
 
 
         public GameBoard(int width, int height, int mines)
@@ -29,6 +29,7 @@ namespace MultiMine.Model
             this.Height = height;
             this.MineCount = mines;
             this.Tiles = new List<Tile>();
+            this.firstMove = true;
 
             int id = 1;
             for (int i = 1; i <= height; i++)
@@ -43,8 +44,10 @@ namespace MultiMine.Model
             Status = GameStatus.InProgress; //Let's start the game!
         }
 
-        public void FirstMove(int x, int y, Random rand)
+        public void FirstMove(int x, int y)
         {
+
+            Random rand = new Random(5);
             //For any board, take the user's first revealed tile + any neighbors of that tile to X depth, and mark them as unavailable for mine placement.
             var depth = 0.125 * Width; //12.5% (1/8th) of the board width becomes the depth of unavailable panels
             var neighbors = GetNeighbors(x, y, (int)depth); //Get all neighbors to specified depth
@@ -66,6 +69,8 @@ namespace MultiMine.Model
                 var nearbyTiles = GetNeighbors(openTile.x, openTile.y);
                 openTile.adjacentMines = nearbyTiles.Count(z => z.isMine);
             }
+
+            this.firstMove = false;
         }
 
         public Tile getTiles(int x, int y)
