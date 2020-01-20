@@ -25,7 +25,7 @@ namespace MultiMine.Controller {
                 listener.gameBoardUpdated();
             } else
             {
-                gameBoard.RevealPanel(x, y);
+                gameBoard.FlagPanel(x, y);
                 listener.gameBoardUpdated();
             }
         }
@@ -39,7 +39,7 @@ namespace MultiMine.Controller {
             }
             else
             {
-                gameBoard.FlagPanel(x, y);
+                gameBoard.RevealPanel(x, y);
                 listener.gameBoardUpdated();
             }
         }

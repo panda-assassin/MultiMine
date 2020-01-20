@@ -116,7 +116,7 @@ namespace MultiMine {
             int x = Convert.ToInt32(tag[0]);
             int y = Convert.ToInt32(tag[1]);
 
-            manager.onLeftClick(x,y);
+            manager.onLeftClick(y + 1,x + 1);
         }
 
         private void onRightButtonCLick(object sender, RoutedEventArgs e)
@@ -127,7 +127,7 @@ namespace MultiMine {
             int x = Convert.ToInt32(tag[0]);
             int y = Convert.ToInt32(tag[1]);
 
-            manager.onRightClick(x, y);
+            manager.onRightClick(y + 1, x + 1);
         }
 
         public void gameBoardUpdated()

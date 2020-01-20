@@ -47,7 +47,7 @@ namespace MultiMine.Model
         public void FirstMove(int x, int y)
         {
 
-            Random rand = new Random(5);
+            Random rand = new Random(0);
             //For any board, take the user's first revealed tile + any neighbors of that tile to X depth, and mark them as unavailable for mine placement.
             var depth = 0.125 * Width; //12.5% (1/8th) of the board width becomes the depth of unavailable panels
             var neighbors = GetNeighbors(x, y, (int)depth); //Get all neighbors to specified depth
@@ -97,6 +97,7 @@ namespace MultiMine.Model
             var selectedTile = Tiles.First(tile => tile.x == x && tile.y == y);
             selectedTile.isRevealed = true;
             selectedTile.isFlagged = false; //Revealed panels cannot be flagged
+            selectedTile.imagePath = "../../Resources/EmptyTile_" + selectedTile.adjacentMines + ".png";
 
             //Step 2: If the panel is a mine, game over!
             if (selectedTile.isMine) Status = GameStatus.Failed;
@@ -120,6 +121,10 @@ namespace MultiMine.Model
             foreach (var neighbor in neighbourTiles)
             {
                 neighbor.isRevealed = true;
+               /* if (neighbor.adjacentMines == 0)
+                {
+                    neighbor.imagePath = "../../Resources/EmptyTile_0.png";
+                }*/
                 if (neighbor.adjacentMines == 0)
                 {
                     RevealZeros(neighbor.x, neighbor.y);
@@ -130,9 +135,11 @@ namespace MultiMine.Model
         public void FlagPanel(int x, int y)
         {
             var tile = Tiles.Where(z => z.x == x && z.y == y).First();
+            tile.imagePath = "../../Resources/Flag.png";
             if (!tile.isRevealed)
             {
                 tile.isFlagged = true;
+                
             }
         }
 
