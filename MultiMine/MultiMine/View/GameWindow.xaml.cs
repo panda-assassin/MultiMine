@@ -31,13 +31,14 @@ namespace MultiMine {
         {
             InitializeComponent();
             this.size = size;
-            this.percentageMines = 20; //hardcoded difficulty TODO: changable
+            this.percentageMines = 25; //hardcoded difficulty TODO: changable
 
             this.Width = (size + 2) * 32;
             this.Height = (size + 3) * 32;
 
             //Initializing gameBoard
-            GameBoard gameBoard = new GameBoard(size, size, size * size * (percentageMines / 100));
+            double mines = size * size * (percentageMines / 100.0);
+            GameBoard gameBoard = new GameBoard(size, size, (int) mines);
             manager = new GameBoardManager(gameBoard, this);
 
             //Initializing tileGrid
@@ -111,28 +112,35 @@ namespace MultiMine {
         private void onButtonClick(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
-            textField.Text = "Left click:" + button.Tag;
             string[] tag = button.Tag.ToString().Split("+".ToCharArray());
             int x = Convert.ToInt32(tag[0]);
             int y = Convert.ToInt32(tag[1]);
 
-            manager.onLeftClick(y + 1,x + 1);
+            manager.onLeftClick(y, x);
         }
 
         private void onRightButtonCLick(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
-            textField.Text = "Right click:" + button.Tag;
             string[] tag = button.Tag.ToString().Split("+".ToCharArray());
             int x = Convert.ToInt32(tag[0]);
             int y = Convert.ToInt32(tag[1]);
 
-            manager.onRightClick(y + 1, x + 1);
+            manager.onRightClick(y, x);
         }
 
         public void gameBoardUpdated()
         {
             loadGrid();
+            textField.Text = "Mines: +" + manager.getGameBoard().MineCount;
+            if (manager.getGameBoard().Status == GameStatus.Completed)
+            {
+                textField.Text = "Game Completed!";
+            }
+            if (manager.getGameBoard().Status == GameStatus.Failed)
+            {
+                textField.Text = "Game Failed!";
+            }
         }
     }
 }

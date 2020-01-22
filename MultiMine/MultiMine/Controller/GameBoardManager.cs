@@ -19,15 +19,9 @@ namespace MultiMine.Controller {
 
         public void onRightClick(int x, int y)
         {
-            if (gameBoard.firstMove)
-            {
-                gameBoard.FirstMove(x,y);
-                listener.gameBoardUpdated();
-            } else
-            {
-                gameBoard.FlagPanel(x, y);
-                listener.gameBoardUpdated();
-            }
+            gameBoard.FlagPanel(x, y);
+            listener.gameBoardUpdated();
+            
         }
 
         public void onLeftClick(int x, int y)
