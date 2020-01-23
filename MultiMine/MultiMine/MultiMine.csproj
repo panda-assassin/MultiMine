@@ -61,6 +61,12 @@
     <Compile Include="Controller\Connector.cs" />
     <Compile Include="Controller\GameBoardListener.cs" />
     <Compile Include="Controller\GameBoardManager.cs" />
+    <Compile Include="View\CreateRoomMultiPlayer.xaml.cs">
+      <DependentUpon>CreateRoomMultiPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CreateRoomSinglePlayer.xaml.cs">
+      <DependentUpon>CreateRoomSinglePlayer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>
@@ -71,6 +77,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\CreateRoomMultiPlayer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\CreateRoomSinglePlayer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\GameWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

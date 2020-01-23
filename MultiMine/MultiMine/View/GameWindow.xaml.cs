@@ -30,11 +30,11 @@ namespace MultiMine
         private RowDefinition[] rows;
         private ColumnDefinition[] columns;
 
-        public GameWindow(int size)
+        public GameWindow(int size, int percentageMines)
         {
             InitializeComponent();
             this.size = size;
-            this.percentageMines = 25; //hardcoded difficulty TODO: changable
+            this.percentageMines = percentageMines;
 
             this.Width = (size + 2) * 32;
             this.Height = (size + 3) * 32;

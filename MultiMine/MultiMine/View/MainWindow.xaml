@@ -7,11 +7,25 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Start!" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="343,182,0,0" Click="Button_Click"/>
-        <DockPanel VerticalAlignment="Center" Margin="233,223,261,172" >
-            <TextBox Text="{Binding ElementName=slValue, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="40"/>
-            <Slider Minimum="5" Maximum="100" TickPlacement="BottomRight" TickFrequency="5" IsSnapToTickEnabled="True" Name="slValue" Width="246" Value="10" />
-        </DockPanel>
+        <TextBlock HorizontalAlignment="Left" Margin="253,59,0,268" TextWrapping="Wrap" Text="MULTIMINE" VerticalAlignment="Center" Height="92" Width="309" FontSize = "50"/>
+        <Button  x:Name="SinglePlayer" Content="Singleplayer" HorizontalAlignment="Left" Margin="122,176,0,0" VerticalAlignment="Top" Width="204" Height="77" FontSize="30" Click="SinglePlayer_Click"/>
+        <Button  x:Name="MultiPlayer" Content="Multiplayer" HorizontalAlignment="Left" Margin="430,176,0,0" VerticalAlignment="Top" Width="204" Height="77" FontSize="30" Click="MultiPlayer_Click">        </Button>
+         
+            <Popup Name="UserNamePopUp" IsOpen="False" AllowsTransparency="True" PopupAnimation="Slide" StaysOpen="False"
+      
+                    Placement="Center">
+            <Border CornerRadius="6"
+                BorderBrush="Gray"
+                Background="LightGray"
+                BorderThickness="1"
+                Padding="1">
+                <StackPanel Orientation="Horizontal" Background="Black">
+                    <Label Content="Username:" Background="White"></Label>
+                <TextBox x:Name="UserNameTextBox" Text="Username" ></TextBox>
+                <Button x:Name="StartMultiMineGame" Content="Start Game!" Click="StartMultiMineGame_Click"></Button>
+            </StackPanel>
+            </Border>
 
+        </Popup>
     </Grid>
 </Window>
