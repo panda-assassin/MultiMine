@@ -64,8 +64,6 @@
     </ApplicationDefinition>
     <Compile Include="Controller\GameBoardListener.cs" />
     <Compile Include="Controller\GameBoardManager.cs" />
-    <Compile Include="Model\GameBoard.cs" />
-    <Compile Include="Model\Tile.cs" />
     <Page Include="View\GameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -127,6 +125,19 @@
     <Resource Include="Resources\GameButton.png" />
     <Resource Include="Resources\Mine.png" />
     <Resource Include="Resources\Tile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MultiMineServer\MultiMineServer.csproj">
+      <Project>{45360780-dadd-4b88-a91f-0654e9dab838}</Project>
+      <Name>MultiMineServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedClasses\SharedClasses.csproj">
+      <Project>{6634164a-f2d9-488b-aca6-80372a045ff9}</Project>
+      <Name>SharedClasses</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
