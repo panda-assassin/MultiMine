@@ -23,7 +23,7 @@ namespace MultiMineServer {
 
         private int uniqueID { get; set; }
 
-        private byte[] buffer = new byte[1024];
+        private byte[] buffer = new byte[80000];
 
         string totalBuffer = "";
         public TcpClient TcpClient { get => tcpClient; set => tcpClient = value; }
@@ -86,6 +86,8 @@ namespace MultiMineServer {
                             {
                                 case MessageIDs.SendGameBoard:
                                     Console.WriteLine("GameBoard data sent");
+                                    Console.WriteLine("Message data : " + message.Data);
+                                    this.SendMessage(new ServerMessage(message.MessageID, message.Data));
                                     break;
                                 default:
                                     break;
@@ -99,12 +101,11 @@ namespace MultiMineServer {
 
 
                     }
-                    if (this.stream != null)
+                    if (this.stream == null)
                     {
                         this.server.DisconnectClient(this);
                         this.StopClientThread();
-                        buffer = new byte[1024];
-                        stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
+                        this.Disconnect();
                     }
 
                 }
@@ -120,68 +121,14 @@ namespace MultiMineServer {
             }
         }
 
-        private void OnRead(IAsyncResult ar)
+
+        public void SendMessage(ServerMessage message)
         {
-            /*try
-            {
-               // Console.WriteLine("got data from client");
-                int receivedBytes = stream.EndRead(ar);
-                string wholePacket = Encoding.ASCII.GetString(buffer);
-                string stringMessage = wholePacket.Replace("\0", "");
-
-                string[] messages = stringMessage.Split(new string[] { Util.END_MESSAGE_KEY }, StringSplitOptions.None);
-                for (int i = 0; i < messages.Length; i++)
-                {
-                    // Console.WriteLine(messages[i]);
-                    try
-                    {
-                        if (messages[i] == "")
-                        {
-                           // Console.WriteLine("Message Length is 0");
-                            continue;
-
-
-                        }
-
-                        // Below: Example of how to use the message class in order to filter out the data send by the other applications.
-                        ServerMessage message = JsonConvert.DeserializeObject<ServerMessage>(messages[i]);
-                        // Console.WriteLine(message.Data);
-
-                        switch (message.MessageID)
-                        {
-                            case MessageIDs.SendGameBoard:
-                                Console.WriteLine("GameBoard data sent");
-                                break;
-                            default:
-                                break;
-                        }
-
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-
-
-                }
-                if (this.stream != null)
-                {
-                    buffer = new byte[1024];
-                    stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
-                }
-
-            }
-            catch (SocketException ex)
-            {
-                //TODO: End the thread and stop the connection with the client.
-                this.Disconnect();
-            }
-            catch (IOException ex)
-            {
-                this.Disconnect();
-            }*/
-
+            string toSend = JsonConvert.SerializeObject((message)) + Util.END_MESSAGE_KEY;
+            byte[] messageBytes = Encoding.Unicode.GetBytes(toSend);
+            this.stream.Write(messageBytes, 0, messageBytes.Length);
         }
+
 
         public void Disconnect()
         {

@@ -46,7 +46,7 @@ namespace MultiMine.Controller {
         private void StartReading()
         {
             Thread t = new Thread(ReadMessage);
-            t.IsBackground = true;
+            t.IsBackground = false;
             t.Start();
         }
 
@@ -55,7 +55,7 @@ namespace MultiMine.Controller {
         /// </summary>
         private void ReadMessage()
         {
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[80000];
             stream.Read(buffer, 0, buffer.Length);
 
             string wholePacket = Encoding.Unicode.GetString(buffer);
@@ -97,14 +97,10 @@ namespace MultiMine.Controller {
             switch (message.MessageID)
             {
                 case MessageIDs.SendGameBoard:
-                    byte[] byteArray = message.data;
-
-                    BinaryFormatter bf = new BinaryFormatter();
-                    using (MemoryStream ms = new MemoryStream(byteArray))
-                    {
-                        GameBoard gameBoard = (GameBoard)bf.Deserialize(ms);
-                        GameBoardManager.GetInstance().setGameBoard(gameBoard);
-                    }
+                    byte[] byteArray = message.Data;
+                    string wholePacket = Encoding.ASCII.GetString(byteArray);
+                    GameBoard gameBoard = JsonConvert.DeserializeObject<GameBoard>(wholePacket);
+                    GameBoardManager.GetInstance().setGameBoard(gameBoard);
                     break;
                 default:
                     break;
@@ -141,8 +137,11 @@ namespace MultiMine.Controller {
 
         public void sendGameBoard(GameBoard gameBoard)
         {
-            byte[] byteArray = Encoding.ASCII.GetBytes(gameBoard.ToString());
+            string gameboardString = JsonConvert.SerializeObject(gameBoard);
+            byte[] byteArray = Encoding.ASCII.GetBytes(gameboardString);
             this.sendMessage(new ServerMessage(MessageIDs.SendGameBoard, byteArray));
+            }
+            
         }
     }
-}
+

@@ -28,8 +28,7 @@ namespace Shared
 
     public enum MessageIDs
     {
-        //ALL EXAMPLES!!! Use Better names later on
-        SendTestData,
+        //ALL EXAMPLES!!! Use Better names later 
         SendGameBoard,
         SendChatMessage
     }

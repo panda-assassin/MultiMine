@@ -11,6 +11,7 @@ namespace Shared.Model
         Failed,
         Completed
     }
+
     public class GameBoard
     {
         public int Width { get; set; }

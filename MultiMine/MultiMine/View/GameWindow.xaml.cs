@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace MultiMine
 {
@@ -136,16 +137,23 @@ namespace MultiMine
 
         public void gameBoardUpdated()
         {
-            loadGrid();
-            textField.Text = "Mines: +" + manager.getGameBoard().MineCount;
-            if (manager.getGameBoard().Status == GameStatus.Completed)
-            {
-                textField.Text = "Game Completed!";
+
+            Application.Current.Dispatcher.BeginInvoke(
+            DispatcherPriority.Background,
+            new Action(() => {
+                loadGrid();
+                textField.Text = "Mines: +" + manager.getGameBoard().MineCount;
+                if (manager.getGameBoard().Status == GameStatus.Completed)
+                {
+                    textField.Text = "Game Completed!";
+                }
+                if (manager.getGameBoard().Status == GameStatus.Failed)
+                {
+                    textField.Text = "Game Failed!";
+                }
             }
-            if (manager.getGameBoard().Status == GameStatus.Failed)
-            {
-                textField.Text = "Game Failed!";
-            }
+));
+            
         }
     }
 }
