@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>MultiMine.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -59,15 +62,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="CreateRoomMultiPlayer.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Compile Include="Controller\GameBoardListener.cs" />
+    <Compile Include="Controller\GameBoardManager.cs" />
+    <Compile Include="Model\GameBoard.cs" />
+    <Compile Include="Model\Tile.cs" />
+    <Page Include="View\GameWindow.xaml">
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CreateRoomSinglePlayer.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -75,14 +78,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Connector.cs" />
-    <Compile Include="CreateRoomMultiPlayer.xaml.cs">
-      <DependentUpon>CreateRoomMultiPlayer.xaml</DependentUpon>
+    <Compile Include="View\GameWindow.xaml.cs">
+      <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CreateRoomSinglePlayer.xaml.cs">
-      <DependentUpon>CreateRoomSinglePlayer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -115,10 +114,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharedClasses\SharedClasses.csproj">
-      <Project>{6634164A-F2D9-488B-ACA6-80372A045FF9}</Project>
-      <Name>SharedClasses</Name>
-    </ProjectReference>
+    <Resource Include="Resources\EmptyTile_0.png" />
+    <Resource Include="Resources\EmptyTile_1.png" />
+    <Resource Include="Resources\EmptyTile_2.png" />
+    <Resource Include="Resources\EmptyTile_3.png" />
+    <Resource Include="Resources\EmptyTile_4.png" />
+    <Resource Include="Resources\EmptyTile_5.png" />
+    <Resource Include="Resources\EmptyTile_6.png" />
+    <Resource Include="Resources\EmptyTile_8.png" />
+    <Resource Include="Resources\FalseFlaggedTile.png" />
+    <Resource Include="Resources\Flag.png" />
+    <Resource Include="Resources\GameButton.png" />
+    <Resource Include="Resources\Mine.png" />
+    <Resource Include="Resources\Tile.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
