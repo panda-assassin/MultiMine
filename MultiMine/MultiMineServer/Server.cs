@@ -61,7 +61,7 @@ namespace MultiMineServer
 
             //listener.BeginAcceptTcpClient(new AsyncCallback(OnConnect), null);
         }
-
+        
         private void tcpHandler(object client)
         {
             TcpClient mclient = (TcpClient)client;

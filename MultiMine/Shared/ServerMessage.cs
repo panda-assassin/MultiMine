@@ -5,19 +5,32 @@ namespace Shared
     public class ServerMessage
     {
 
-        public byte[] Data { get; set; }
-        public MessageIDs Id { get; set; }
+        public byte[] data;
+        private MessageIDs id;
 
-        public ServerMessage(MessageIDs Id, byte[] Data)
+        public ServerMessage(MessageIDs id, byte[] data)
         {
-            this.Id = Id;
-            this.Data = Data;
+            this.id = id;
+            this.data = data;
+        }
+
+        public MessageIDs MessageID
+        {
+            get { return id; }
+        }
+
+        public byte[] Data
+        {
+            get { return data; }
         }
     }
+
 
     public enum MessageIDs
     {
         //ALL EXAMPLES!!! Use Better names later on
-        SendTestData
+        SendTestData,
+        SendGameBoard,
+        SendChatMessage
     }
 }

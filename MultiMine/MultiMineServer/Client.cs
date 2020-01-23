@@ -60,10 +60,10 @@ namespace MultiMineServer {
                         ServerMessage message = JsonConvert.DeserializeObject<ServerMessage>(messages[i]);
                         // Console.WriteLine(message.Data);
 
-                        switch (message.Id)
+                        switch (message.MessageID)
                         {
-                            case MessageIDs.SendTestData:
-                                Console.WriteLine("TEST MESSAGE = " + message.Data);
+                            case MessageIDs.SendGameBoard:
+                                Console.WriteLine("GameBoard data sent");
                                 break;
                             default:
                                 break;

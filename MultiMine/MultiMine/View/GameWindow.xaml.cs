@@ -41,7 +41,10 @@ namespace MultiMine
             //Initializing gameBoard
             double mines = size * size * (percentageMines / 100.0);
             GameBoard gameBoard = new GameBoard(size, size, (int)mines);
-            manager = new GameBoardManager(gameBoard, this);
+            manager = GameBoardManager.GetInstance();
+            manager.setListener(this);
+            manager.setGameBoard(gameBoard);
+            
 
             //Initializing tileGrid
             mainGrid.Children.Clear();
