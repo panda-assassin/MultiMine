@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 
@@ -15,6 +16,10 @@ namespace MultiMineServer {
         private TcpClient tcpClient;
         private Server server;
         private NetworkStream stream;
+
+        private Thread runningThread;
+
+        private bool threadRunning;
 
         private int uniqueID { get; set; }
 
@@ -30,12 +35,94 @@ namespace MultiMineServer {
             this.server = server;
 
             this.stream = tcpClient.GetStream();
-            stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
+            /*stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);*/
+        }
+
+        public void StartClientThread()
+        {
+            this.threadRunning = true;
+            this.runningThread = new Thread(Run);
+            this.runningThread.IsBackground = true;
+            this.runningThread.Start();
+        }
+
+        public void StopClientThread()
+        {
+            this.threadRunning = false;
+            this.runningThread.Abort();
+        }
+
+        private void Run()
+        {
+            while (threadRunning)
+            {
+                try
+                {
+                    // Console.WriteLine("got data from client");
+/*                    int receivedBytes = stream.EndRead(ar);*/
+                    this.stream.Read(buffer, 0, buffer.Length);
+                    string wholePacket = Encoding.ASCII.GetString(buffer);
+                    string stringMessage = wholePacket.Replace("\0", "");
+
+                    string[] messages = stringMessage.Split(new string[] { Util.END_MESSAGE_KEY }, StringSplitOptions.None);
+                    for (int i = 0; i < messages.Length; i++)
+                    {
+                        // Console.WriteLine(messages[i]);
+                        try
+                        {
+                            if (messages[i] == "")
+                            {
+                                // Console.WriteLine("Message Length is 0");
+                                continue;
+
+
+                            }
+
+                            // Below: Example of how to use the message class in order to filter out the data send by the other applications.
+                            ServerMessage message = JsonConvert.DeserializeObject<ServerMessage>(messages[i]);
+                            // Console.WriteLine(message.Data);
+
+                            switch (message.MessageID)
+                            {
+                                case MessageIDs.SendGameBoard:
+                                    Console.WriteLine("GameBoard data sent");
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+
+
+                    }
+                    if (this.stream != null)
+                    {
+                        this.server.DisconnectClient(this);
+                        this.StopClientThread();
+                        buffer = new byte[1024];
+                        stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
+                    }
+
+                }
+                catch (SocketException ex)
+                {
+                    //TODO: End the thread and stop the connection with the client.
+                    this.Disconnect();
+                }
+                catch (IOException ex)
+                {
+                    this.Disconnect();
+                }
+            }
         }
 
         private void OnRead(IAsyncResult ar)
         {
-            try
+            /*try
             {
                // Console.WriteLine("got data from client");
                 int receivedBytes = stream.EndRead(ar);
@@ -92,7 +179,7 @@ namespace MultiMineServer {
             catch (IOException ex)
             {
                 this.Disconnect();
-            }
+            }*/
 
         }
 

@@ -22,44 +22,32 @@ namespace MultiMineServer
 
         public Server()
         {
-            StartServer();
-
             Console.WriteLine("Server started and listening.");
             Console.WriteLine("Type quit to exit.");
-
-            bool running = true;
-            while (running)
-            {
-                string userInput = Console.ReadLine();
-                if (userInput.ToLower() == "quit")
-                {
-                    running = false;
-                }
-                else
-                {
-                    Console.WriteLine("Unknown command: {0}", userInput);
-                }
-            }
+            StartServer();
         }
 
         public void StartServer()
         {
             listener = new TcpListener(IPAddress.Any, 1234);
             listener.Start();
-            listener.BeginAcceptTcpClient(new AsyncCallback(OnConnect), null);
+            Start();
         }
 
-        private void OnConnect(IAsyncResult ar)
+        private void Start()
         {
-            TcpClient tcpClient = listener.AcceptTcpClient();
-            Thread tcpHandlerThread = new Thread(new ParameterizedThreadStart(tcpHandler));
-            tcpHandlerThread.Start(tcpClient);
-            Console.WriteLine("New client connected");
-            Console.WriteLine(tcpClient.GetStream());
+            while (true)
+            {
+                TcpClient tcpClient = listener.AcceptTcpClient();
+                Client client = new Client(tcpClient, this);
+                client.StartClientThread();
+                /*Thread tcpHandlerThread = new Thread(new ParameterizedThreadStart(tcpHandler));
+                tcpHandlerThread.Start(tcpClient);*/
+                Console.WriteLine("New client connected");
+                Console.WriteLine(tcpClient.GetStream());
 
-            clients.Add(new Client(tcpClient, this));
-
-            //listener.BeginAcceptTcpClient(new AsyncCallback(OnConnect), null);
+                clients.Add(client);
+            }
         }
         
         private void tcpHandler(object client)
@@ -73,6 +61,16 @@ namespace MultiMineServer
             }
             stream.Close();
             mclient.Close();
+        }
+
+        public void DisconnectClient(Client client)
+        {
+            RemoveClient(client);
+        }
+
+        private void RemoveClient(Client client)
+        {
+            clients.Remove(client);
         }
 
         private void writeToFile(GameBoard gameBoard)
