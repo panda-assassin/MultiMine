@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MultiMineServer {
@@ -43,18 +44,35 @@ namespace MultiMineServer {
             listener.BeginAcceptTcpClient(new AsyncCallback(OnConnect), null);
         }
 
-        public void RemoveClient(Client client)
-        {
-            clients.Remove(client);
-        }
         private void OnConnect(IAsyncResult ar)
         {
-            var newTcpClient = listener.EndAcceptTcpClient(ar);
+            TcpClient tcpClient = listener.AcceptTcpClient();
+            Thread tcpHandlerThread = new Thread(new ParameterizedThreadStart(tcpHandler));
+            tcpHandlerThread.Start(tcpClient);
             Console.WriteLine("New client connected");
+            Console.WriteLine(tcpClient.GetStream());
+            
+            clients.Add(new Client(tcpClient, this));
 
-            clients.Add(new Client(newTcpClient, this));
+            //listener.BeginAcceptTcpClient(new AsyncCallback(OnConnect), null);
+        }
 
-            listener.BeginAcceptTcpClient(new AsyncCallback(OnConnect), null);
+        private void tcpHandler(object client)
+        {
+            TcpClient mclient = (TcpClient)client;
+            NetworkStream stream = mclient.GetStream();
+            byte[] message = new byte[1024];
+            while (true)
+            {
+                stream.Read(message,0,message.Length);
+            }
+            stream.Close();
+            mclient.Close();
+        }
+
+        private void writeToFile()
+        {
+
         }
 
     }

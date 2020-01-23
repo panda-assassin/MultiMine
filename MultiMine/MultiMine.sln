@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiMine", "MultiMine\Mult
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiMineServer", "MultiMineServer\MultiMineServer.csproj", "{45360780-DADD-4B88-A91F-0654E9DAB838}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedClasses", "SharedClasses\SharedClasses.csproj", "{6634164A-F2D9-488B-ACA6-80372A045FF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedClasses", "SharedClasses\SharedClasses.csproj", "{6634164A-F2D9-488B-ACA6-80372A045FF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tester", "Tester\Tester.csproj", "{943A6FA1-C9E1-47F3-A4CA-3FD8E6E89867}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{6634164A-F2D9-488B-ACA6-80372A045FF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6634164A-F2D9-488B-ACA6-80372A045FF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6634164A-F2D9-488B-ACA6-80372A045FF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{943A6FA1-C9E1-47F3-A4CA-3FD8E6E89867}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{943A6FA1-C9E1-47F3-A4CA-3FD8E6E89867}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{943A6FA1-C9E1-47F3-A4CA-3FD8E6E89867}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{943A6FA1-C9E1-47F3-A4CA-3FD8E6E89867}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

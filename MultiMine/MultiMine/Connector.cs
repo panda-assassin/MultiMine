@@ -2,14 +2,19 @@
 using SharedClasses;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MultiMineCode {
-    class Connector {
+namespace MultiMineCode
+{
+    class Connector
+    {
 
         private static Connector instance;
 
@@ -24,27 +29,22 @@ namespace MultiMineCode {
         /// </summary>
         private Connector()
         {
-            try
-            {
-                client = new System.Net.Sockets.TcpClient("127.0.0.1", 1234); // Create a new connection
-                stream = client.GetStream();
-
-                StartReading();
-            }
-            catch (Exception ex)
-            {
-                throw new NotImplementedException();
-            }
+            Thread mThread = new Thread(new ThreadStart(ConnectAsClient));
+            mThread.Start();
         }
 
-        /// <summary>
-        /// Start reading messages from the server on a new thread. 
-        /// </summary>
-        private void StartReading()
+        private void ConnectAsClient()
         {
-            Thread t = new Thread(ReadMessage);
-            t.IsBackground = true;
-            t.Start();
+            TcpClient client = new TcpClient();
+            client.Connect(IPAddress.Parse("192.168.1.124"), 1234);
+
+            stream = client.GetStream();
+            string s = "Hello from client";
+            byte[] message = Encoding.ASCII.GetBytes(s);
+            stream.Write(message, 0, message.Length);
+            stream.Close();
+            client.Close();
+
         }
 
 
@@ -53,6 +53,7 @@ namespace MultiMineCode {
         /// </summary>
         private void ReadMessage()
         {
+            //TODO miss andere buffer size
             byte[] buffer = new byte[1024];
             stream.Read(buffer, 0, buffer.Length);
 
@@ -107,20 +108,22 @@ namespace MultiMineCode {
         /// <summary>
         /// Send a message to the server.
         /// </summary>
-        private void sendMessage(ServerMessage message)
+        private void sendMessage(object obj)
         {
-            string toSend = JsonConvert.SerializeObject(message) + Util.END_MESSAGE_KEY;
-            byte[] messageBytes = Encoding.ASCII.GetBytes(toSend);
+            byte[] tosend = ObjectToByteArray(obj);
 
             try
             {
-                stream.Write(messageBytes, 0, messageBytes.Length); // Write the bytes
+                //stream.write(name,0,name.lengt);//Write the name of the game
+                stream.Write(tosend, 0, tosend.Length); // Write the bytes
             }
             catch (Exception e)
             {
                 throw e;
             }
         }
+
+
 
         public static Connector GetInstance()
         {
@@ -131,11 +134,34 @@ namespace MultiMineCode {
             return instance;
         }
 
-        public void sendTestData(String data)
+        //creates object from bytearray
+        private byte[] ObjectToByteArray(object obj)
         {
-            sendMessage(new ServerMessage(MessageIDs.SendTestData, JsonConvert.SerializeObject(data)));
+            if (obj == null)
+                return null;
+
+            BinaryFormatter bf = new BinaryFormatter();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bf.Serialize(ms, obj);
+                return ms.ToArray();
+            }
+           
         }
 
+        //makes bytearray from object
+        private object ByteArrayToObject(Byte[] byteArray)
+        {
+            if (byteArray == null)
+                return null;
+
+            BinaryFormatter bf = new BinaryFormatter();
+            using (MemoryStream ms = new MemoryStream(byteArray))
+            {
+                object obj = bf.Deserialize(ms);
+                return obj;
+            }
+        }
 
     }
 
