@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{45360780-DADD-4B88-A91F-0654E9DAB838}</ProjectGuid>
+    <ProjectGuid>{822A3A0A-CFE5-43C8-80CD-F8415C46EF91}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>MultiMineServer</RootNamespace>
     <AssemblyName>MultiMineServer</AssemblyName>
@@ -28,7 +28,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -56,13 +56,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharedClasses\SharedClasses.csproj">
-      <Project>{6634164A-F2D9-488B-ACA6-80372A045FF9}</Project>
-      <Name>SharedClasses</Name>
-    </ProjectReference>
+    <Content Include="Data\Data.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\Data.txt" />
+    <ProjectReference Include="..\Shared\SharedClasses.csproj">
+      <Project>{AA200684-8283-46B6-9977-6FE7D17FBA6C}</Project>
+      <Name>SharedClasses</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -13,6 +13,5 @@ namespace MultiMine
     /// </summary>
     public partial class App : Application
     {
-
     }
 }

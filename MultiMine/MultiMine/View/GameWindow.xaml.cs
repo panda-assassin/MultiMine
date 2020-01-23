@@ -1,18 +1,26 @@
 ﻿using MultiMine.Controller;
+using Shared.Model;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using SharedClasses;
-using MultiMine.Model;
+using System.Windows.Shapes;
 
 namespace MultiMine
 {
     /// <summary>
     /// Interaction logic for GameWindow.xaml
     /// </summary>
-    public partial class GameWindow : Window, GameBoardListener {
+    public partial class GameWindow : Window, GameBoardListener
+    {
         private int size;
         private int percentageMines;
 
@@ -32,7 +40,7 @@ namespace MultiMine
 
             //Initializing gameBoard
             double mines = size * size * (percentageMines / 100.0);
-            GameBoard gameBoard = new GameBoard(size, size, (int) mines);
+            GameBoard gameBoard = new GameBoard(size, size, (int)mines);
             manager = new GameBoardManager(gameBoard, this);
 
             //Initializing tileGrid

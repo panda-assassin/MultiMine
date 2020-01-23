@@ -1,4 +1,4 @@
-﻿using MultiMine.Model;
+﻿using Shared.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

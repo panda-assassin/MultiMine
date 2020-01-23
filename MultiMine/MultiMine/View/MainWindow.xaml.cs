@@ -1,5 +1,4 @@
-﻿using MultiMineCode;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,33 +20,9 @@ namespace MultiMine
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        Connector connector;
-
         public MainWindow()
         {
             InitializeComponent();
-            //connector = Connector.GetInstance();
-        }
-
-        private void SinglePlayer_Click(object sender, RoutedEventArgs e)
-        {
-
-            this.Hide();
-            CreateRoomSinglePlayer singlePlayerRoom = new CreateRoomSinglePlayer();
-            singlePlayerRoom.Closed += (s, args) => this.Close();
-            singlePlayerRoom.Show();
-            //TODO: Start create room_singleplayer
-        }
-
-        private void MultiPlayer_Click(object sender, RoutedEventArgs e)
-        {
-            UserNamePopUp.IsOpen = true;
-        }
-
-        private void StartMultiMineGame_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO: Start create room_multiplayer
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

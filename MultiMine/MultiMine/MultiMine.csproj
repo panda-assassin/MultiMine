@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{850434B1-C118-460C-B05F-61A39C0526EE}</ProjectGuid>
+    <ProjectGuid>{34743B27-B22F-476E-9481-613D261634F8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>MultiMine</RootNamespace>
     <AssemblyName>MultiMine</AssemblyName>
@@ -34,16 +34,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>MultiMine.App</StartupObject>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -64,25 +60,24 @@
     </ApplicationDefinition>
     <Compile Include="Controller\GameBoardListener.cs" />
     <Compile Include="Controller\GameBoardManager.cs" />
-    <Page Include="View\GameWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="View\GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\GameWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -119,6 +114,7 @@
     <Resource Include="Resources\EmptyTile_4.png" />
     <Resource Include="Resources\EmptyTile_5.png" />
     <Resource Include="Resources\EmptyTile_6.png" />
+    <Resource Include="Resources\EmptyTile_7.png" />
     <Resource Include="Resources\EmptyTile_8.png" />
     <Resource Include="Resources\FalseFlaggedTile.png" />
     <Resource Include="Resources\Flag.png" />
@@ -128,16 +124,13 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MultiMineServer\MultiMineServer.csproj">
-      <Project>{45360780-dadd-4b88-a91f-0654e9dab838}</Project>
+      <Project>{822a3a0a-cfe5-43c8-80cd-f8415c46ef91}</Project>
       <Name>MultiMineServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SharedClasses\SharedClasses.csproj">
-      <Project>{6634164a-f2d9-488b-aca6-80372a045ff9}</Project>
+    <ProjectReference Include="..\Shared\SharedClasses.csproj">
+      <Project>{AA200684-8283-46B6-9977-6FE7D17FBA6C}</Project>
       <Name>SharedClasses</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

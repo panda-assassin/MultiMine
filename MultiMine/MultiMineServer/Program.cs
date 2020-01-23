@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MultiMineServer {
-    class Program {
+namespace MultiMineServer
+{
+    class Program
+    {
         static void Main(string[] args)
         {
             new Server();

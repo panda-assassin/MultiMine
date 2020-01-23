@@ -1,14 +1,13 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29306.81
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiMine", "MultiMine\MultiMine.csproj", "{850434B1-C118-460C-B05F-61A39C0526EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiMine", "MultiMine\MultiMine.csproj", "{34743B27-B22F-476E-9481-613D261634F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiMineServer", "MultiMineServer\MultiMineServer.csproj", "{45360780-DADD-4B88-A91F-0654E9DAB838}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiMineServer", "MultiMineServer\MultiMineServer.csproj", "{822A3A0A-CFE5-43C8-80CD-F8415C46EF91}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedClasses", "SharedClasses\SharedClasses.csproj", "{6634164A-F2D9-488B-ACA6-80372A045FF9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tester", "Tester\Tester.csproj", "{943A6FA1-C9E1-47F3-A4CA-3FD8E6E89867}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedClasses", "Shared\SharedClasses.csproj", "{AA200684-8283-46B6-9977-6FE7D17FBA6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,23 +15,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{850434B1-C118-460C-B05F-61A39C0526EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{850434B1-C118-460C-B05F-61A39C0526EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{850434B1-C118-460C-B05F-61A39C0526EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{850434B1-C118-460C-B05F-61A39C0526EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{45360780-DADD-4B88-A91F-0654E9DAB838}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{45360780-DADD-4B88-A91F-0654E9DAB838}.Debug|Any CPU.Build.0 = Release|Any CPU
-		{45360780-DADD-4B88-A91F-0654E9DAB838}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45360780-DADD-4B88-A91F-0654E9DAB838}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6634164A-F2D9-488B-ACA6-80372A045FF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6634164A-F2D9-488B-ACA6-80372A045FF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6634164A-F2D9-488B-ACA6-80372A045FF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6634164A-F2D9-488B-ACA6-80372A045FF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34743B27-B22F-476E-9481-613D261634F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34743B27-B22F-476E-9481-613D261634F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34743B27-B22F-476E-9481-613D261634F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34743B27-B22F-476E-9481-613D261634F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{822A3A0A-CFE5-43C8-80CD-F8415C46EF91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{822A3A0A-CFE5-43C8-80CD-F8415C46EF91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{822A3A0A-CFE5-43C8-80CD-F8415C46EF91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{822A3A0A-CFE5-43C8-80CD-F8415C46EF91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA200684-8283-46B6-9977-6FE7D17FBA6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA200684-8283-46B6-9977-6FE7D17FBA6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA200684-8283-46B6-9977-6FE7D17FBA6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA200684-8283-46B6-9977-6FE7D17FBA6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9B06AFD3-74B7-409B-BE26-F8424A9F4582}
+		SolutionGuid = {A9E7C7F1-DBF0-46DE-99D6-62371A28B60C}
 	EndGlobalSection
 EndGlobal
