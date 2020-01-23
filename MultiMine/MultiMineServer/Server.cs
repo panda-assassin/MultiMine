@@ -29,6 +29,7 @@ namespace MultiMineServer
 
         public void StartServer()
         {
+
             listener = new TcpListener(IPAddress.Any, 1234);
             listener.Start();
             Start();
@@ -52,12 +53,17 @@ namespace MultiMineServer
         
         private void tcpHandler(object client)
         {
+            
             TcpClient mclient = (TcpClient)client;
             NetworkStream stream = mclient.GetStream();
             byte[] message = new byte[1024];
-            while (true)
+            Boolean running = true;
+            while (running)
             {
-                stream.Read(message, 0, message.Length);
+              //  if (stream.Read(message, 0, message.Length))
+               // {
+
+               // }
             }
             stream.Close();
             mclient.Close();
@@ -87,6 +93,7 @@ namespace MultiMineServer
         {
             return (GameBoard)JsonConvert.DeserializeObject(System.IO.File.ReadAllText(getPath() + "Data/Data.txt"));
         }
+
         public static string getPath()
         {
             string startupPath = System.IO.Directory.GetCurrentDirectory();

@@ -3,6 +3,8 @@ using Shared.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,6 +24,8 @@ namespace MultiMine
     /// </summary>
     public partial class GameWindow : Window, GameBoardListener
     {
+        private int serverPort = 1234;
+
         private int size;
         private int percentageMines;
 
@@ -33,6 +37,9 @@ namespace MultiMine
         public GameWindow(int size)
         {
             InitializeComponent();
+
+            Connect("192.168.140.74", 1234);
+
             this.size = size;
             this.percentageMines = 25; //hardcoded difficulty TODO: changable
 
@@ -51,6 +58,12 @@ namespace MultiMine
             mainGrid.Children.Clear();
             loadGrid();
 
+        }
+
+        public static void Connect(string host, int port)
+        {
+            TcpClient client = new TcpClient();
+            client.Connect(host, port);
         }
 
         private void loadGrid()
