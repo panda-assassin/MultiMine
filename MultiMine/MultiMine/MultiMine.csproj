@@ -60,6 +60,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\ChatListener.cs" />
+    <Compile Include="Controller\ChatManager.cs" />
     <Compile Include="Controller\Connector.cs" />
     <Compile Include="Controller\GameBoardListener.cs" />
     <Compile Include="Controller\GameBoardManager.cs" />

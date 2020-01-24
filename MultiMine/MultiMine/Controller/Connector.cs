@@ -115,6 +115,9 @@ namespace MultiMine.Controller
                         clients.Add(array[i]);
                     }
                     break;
+                case MessageIDs.SendChatMessage:
+                    ChatManager.GetInstance().setChat(Encoding.ASCII.GetString(message.data));
+                    break;
                 default:
                     break;
             }
@@ -153,13 +156,19 @@ namespace MultiMine.Controller
             string gameboardString = JsonConvert.SerializeObject(gameBoard);
             byte[] byteArray = Encoding.ASCII.GetBytes(gameboardString);
             this.sendMessage(new ServerMessage(MessageIDs.SendGameBoard, byteArray));
-            }
+        }
+
+        public void sendChatMessage(string message)
+        {
+            byte[] byteArray = Encoding.ASCII.GetBytes(message);
+            this.sendMessage(new ServerMessage(MessageIDs.SendChatMessage, byteArray));
+        }
 
         public void connectClient()
         {
             string clientConnected = "true";
             byte[] byteArray = Encoding.ASCII.GetBytes(clientConnected);
-            this.sendMessage(new ServerMessage(MessageIDs.ClientConnected, byteArray)) ;
+            this.sendMessage(new ServerMessage(MessageIDs.ClientConnected, byteArray));
         }
 
         public void disconnectClient()
@@ -180,10 +189,6 @@ namespace MultiMine.Controller
         }
     }
 
-    
+
 }
-
-
-  
-    }
 

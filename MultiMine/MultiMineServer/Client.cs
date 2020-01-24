@@ -106,6 +106,11 @@ namespace MultiMineServer {
 
                                     this.SendMessage(new ServerMessage((message.MessageID), byteArray));
                                     break;
+                                case MessageIDs.SendChatMessage:
+                                    Console.WriteLine("message data sent");
+                                    Console.WriteLine("Message data : " + Encoding.ASCII.GetString(message.data));
+                                    this.SendMessage(new ServerMessage(message.MessageID, message.Data));
+                                    break;
                                 default:
                                     break;
                             }
