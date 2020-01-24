@@ -22,23 +22,6 @@
         </DockPanel>
         <Button x:Name="StartButton" Content="Start game!" HorizontalAlignment="Left" Margin="100,324,0,0" VerticalAlignment="Top" Width="130" Height="36" Click="StartButtonClick"/>
         <Button Content="Back" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="BackButtonClick"/>
-        <Label Content="Player Count:" Margin="100,200,0,0" VerticalAlignment="Top" Height="31" HorizontalAlignment="Left" Width="97"/>
-        <ComboBox x:Name="PlayerCountBox"  HorizontalAlignment="Left" Margin="200,200,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="PlayerCountBox_SelectionChanged">
-            <ComboBoxItem IsSelected="True" Content="1"/>
-            <ComboBoxItem Content="2" />
-            <ComboBoxItem Content="3"/>
-            <ComboBoxItem Content="4"/>
-            <ComboBoxItem Content="5"/>
-            <ComboBoxItem Content="6"/>
-
-        </ComboBox>
-        <ListView HorizontalAlignment="Left" Height="100" Margin="350,150,0,0" VerticalAlignment="Top" Width="150">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
 
     </Grid>
 </Window>

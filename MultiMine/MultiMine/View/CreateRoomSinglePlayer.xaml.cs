@@ -30,7 +30,6 @@ namespace MultiMine {
 
         private void StartButtonClick(object sender, RoutedEventArgs e)
         {
-            //TODO StartGame
             this.Hide();
             int percentageMines = (DifficultyBox.SelectedIndex) * 10 + 10;
             GameWindow gameWindow = new GameWindow((int)slValue.Value, percentageMines);
