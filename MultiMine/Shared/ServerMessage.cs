@@ -6,7 +6,7 @@ namespace Shared
     {
 
         public byte[] data;
-        private MessageIDs id;
+        public MessageIDs id;
 
         public ServerMessage(MessageIDs id, byte[] data)
         {
@@ -29,6 +29,10 @@ namespace Shared
     public enum MessageIDs
     {
         //ALL EXAMPLES!!! Use Better names later 
+        ClientConnected,
+        ClientDisconnected,
+        SendAllClients,
+        RequestAllClients,
         SendGameBoard,
         SendChatMessage
     }

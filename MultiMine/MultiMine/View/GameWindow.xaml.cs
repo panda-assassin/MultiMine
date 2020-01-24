@@ -33,6 +33,7 @@ namespace MultiMine
         public GameWindow(int size, int percentageMines)
         {
             InitializeComponent();
+            Connector.GetInstance();
             this.size = size;
             this.percentageMines = percentageMines;
 
@@ -45,6 +46,7 @@ namespace MultiMine
             manager = GameBoardManager.GetInstance();
             manager.setListener(this);
             manager.setGameBoard(gameBoard);
+           
             
 
             //Initializing tileGrid
@@ -154,6 +156,16 @@ namespace MultiMine
             }
 ));
             
+        }
+
+        private void backButton_Click(object sender, RoutedEventArgs e)
+        {
+            Connector.GetInstance().disconnectClient();
+            Connector.GetInstance().destroyInstance();
+            this.Hide();
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Closed += (s, args) => this.Close();
+            mainWindow.Show();
         }
     }
 }

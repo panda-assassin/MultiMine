@@ -36,10 +36,25 @@ namespace MultiMineServer
 
         private void Start()
         {
+
+            int random = 0;
             while (true)
             {
                 TcpClient tcpClient = listener.AcceptTcpClient();
-                Client client = new Client(tcpClient, this);
+                Random rand = new Random();
+                while (true)
+                {
+                    random = rand.Next(1000);
+                    Client stubClient = getClient(random);
+                    if (!clients.Contains(stubClient))
+                    {
+                        break;
+                    }
+                }
+               
+
+                
+                Client client = new Client(tcpClient, this, random);
                 client.StartClientThread();
                 /*Thread tcpHandlerThread = new Thread(new ParameterizedThreadStart(tcpHandler));
                 tcpHandlerThread.Start(tcpClient);*/
@@ -48,6 +63,17 @@ namespace MultiMineServer
 
                 clients.Add(client);
             }
+        }
+
+        private Client getClient(int UniqueID)
+        {
+            foreach (Client client in clients){
+                if (client.uniqueID == UniqueID)
+                {
+                    return client;
+                }
+            }
+            return null;
         }
         
         private void tcpHandler(object client)
