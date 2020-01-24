@@ -25,6 +25,9 @@ namespace MultiMine.Controller
         private string secondHalfFromBuffer;
         private bool incompleteMessage;
 
+        public GameBoard localGameBoard;
+        public bool gameBoardReceived;
+
         /// <summary>
         /// Makes connection to the server and saves the connection in the client and stream variable. 
         /// </summary>
@@ -124,6 +127,14 @@ namespace MultiMine.Controller
                 case MessageIDs.SendChatMessage:
                     ChatManager.GetInstance().setChat(Encoding.ASCII.GetString(message.data));
                     break;
+                case MessageIDs.SendGameBoardMultiplayer:
+                    GameBoard gameBoard2 = JsonConvert.DeserializeObject<GameBoard>(wholePacket);
+                    localGameBoard = gameBoard2;
+                    gameBoardReceived = true;
+                    break;
+                case MessageIDs.SendChatMessageMultiplayer:
+                    ChatManager.GetInstance().setChat(Encoding.ASCII.GetString(message.data));
+                    break;
                 default:
                     break;
             }
@@ -170,18 +181,10 @@ namespace MultiMine.Controller
             this.sendMessage(new ServerMessage(MessageIDs.SendChatMessage, byteArray));
         }
 
-        public void connectClient()
-        {
-            string clientConnected = "true";
-            byte[] byteArray = Encoding.ASCII.GetBytes(clientConnected);
-            this.sendMessage(new ServerMessage(MessageIDs.ClientConnected, byteArray));
-        }
-
-        public void disconnectClient()
-        {
-            string clientConnected = "false";
-            byte[] byteArray = Encoding.ASCII.GetBytes(clientConnected);
-            this.sendMessage(new ServerMessage(MessageIDs.ClientDisconnected, byteArray));
+        public void joinHost(string hostID)
+        { 
+            byte[] byteArray = Encoding.ASCII.GetBytes(hostID);
+            this.sendMessage(new ServerMessage(MessageIDs.JoinMultiPlayerServer, byteArray));
         }
 
         public void requestClientList()
@@ -197,6 +200,18 @@ namespace MultiMine.Controller
         public bool GotClients()
         {
             return this.gotClients;
+        }
+
+        public bool GotGameBoard()
+        {
+            return this.gameBoardReceived;
+        }
+
+        public void saveGame(GameBoard gameBoard)
+        {
+            string gameboardString = JsonConvert.SerializeObject(gameBoard);
+            byte[] byteArray = Encoding.ASCII.GetBytes(gameboardString);
+            this.sendMessage(new ServerMessage(MessageIDs.SaveGame, byteArray));
         }
     }
 }

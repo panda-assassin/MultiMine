@@ -16,7 +16,7 @@ namespace MultiMineServer {
 
         private TcpClient tcpClient;
         private Server server;
-        private NetworkStream stream;
+        public NetworkStream stream;
 
         private Thread runningThread;
 
@@ -87,7 +87,6 @@ namespace MultiMineServer {
                             switch (message.MessageID)
                             {
                                 case MessageIDs.SendGameBoard:
-                                    writeToFile(Encoding.ASCII.GetString(message.data));
                                     Console.WriteLine("GameBoard data sent");
                                     Console.WriteLine("Message data : " + message.Data);
                                     this.SendMessage(new ServerMessage(message.MessageID, message.Data));
@@ -109,6 +108,22 @@ namespace MultiMineServer {
                                     Console.WriteLine("message data sent");
                                     Console.WriteLine("Message data : " + Encoding.ASCII.GetString(message.data));
                                     this.SendMessage(new ServerMessage(message.MessageID, message.Data));
+                                    break;
+                                case MessageIDs.StartMultiplayerServer:
+                                    Room room = new Room(this);
+                                    room.StartRoomThread();
+                                    server.Rooms.Add(room);
+                                    server.Clients.Remove(this);
+                                    
+                                    break;
+                                case MessageIDs.JoinMultiPlayerServer:
+                                    string clientHost = Encoding.ASCII.GetString(message.data);
+                                    server.getRoom(server.getClient(Int32.Parse(clientHost))).joinRoom(this);
+                                    server.getRoom(server.getClient(Int32.Parse(clientHost))).sendGameRoomData(this);
+                                    server.Clients.Remove(this);
+                                    break;
+                                case MessageIDs.SaveGame:
+                                    writeToFile(Encoding.ASCII.GetString(message.data));
                                     break;
                                 default:
                                     break;
@@ -167,7 +182,7 @@ namespace MultiMineServer {
 
         private GameBoard readFromFile()
         {
-            return (GameBoard)JsonConvert.DeserializeObject(System.IO.File.ReadAllText(getPath() + "Data/Data.txt"));
+            return (GameBoard)JsonConvert.DeserializeObject(System.IO.File.ReadAllText(getPath() + "/Data/Data.txt"));
         }
 
         public static string getPath()

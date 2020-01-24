@@ -17,8 +17,10 @@ namespace MultiMineServer
 
         TcpListener listener;
         private List<Client> clients = new List<Client>();
+        private List<Room> rooms = new List<Room>();
 
         internal List<Client> Clients { get => clients; set => clients = value; }
+        internal List<Room> Rooms { get => rooms; set => rooms = value; }
 
         public Server()
         {
@@ -65,7 +67,7 @@ namespace MultiMineServer
             }
         }
 
-        private Client getClient(int UniqueID)
+        public Client getClient(int UniqueID)
         {
             foreach (Client client in clients){
                 if (client.uniqueID == UniqueID)
@@ -75,18 +77,17 @@ namespace MultiMineServer
             }
             return null;
         }
-        
-        private void tcpHandler(object client)
+
+        public Room getRoom(Client client)
         {
-            TcpClient mclient = (TcpClient)client;
-            NetworkStream stream = mclient.GetStream();
-            byte[] message = new byte[1024];
-            while (true)
+            foreach (Room room in rooms)
             {
-                stream.Read(message, 0, message.Length);
+                if (room.getRoomClients().Contains(client))
+                {
+                    return room;
+                }
             }
-            stream.Close();
-            mclient.Close();
+            return null;
         }
 
         public void DisconnectClient(Client client)

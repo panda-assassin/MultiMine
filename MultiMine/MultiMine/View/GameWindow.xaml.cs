@@ -62,6 +62,9 @@ namespace MultiMine
 
         }
 
+        public GameWindow(GameBoard gameBoard) { 
+        }
+
         private void loadGrid()
         {
 
@@ -167,7 +170,6 @@ namespace MultiMine
 
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
-            Connector.GetInstance().disconnectClient();
             Connector.GetInstance().destroyInstance();
             ChatManager.GetInstance().clearChat();
             this.Hide();
@@ -193,6 +195,11 @@ namespace MultiMine
                 chatview.Items.Add(message);
             }));
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Connector.GetInstance().saveGame(manager.getGameBoard());
         }
     }
 }

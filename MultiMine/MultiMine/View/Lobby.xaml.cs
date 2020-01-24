@@ -60,7 +60,24 @@ namespace MultiMine.View {
 
         private void JoinLobbyClick(object sender, RoutedEventArgs e)
         {
-            //add
+            Connector.GetInstance().joinHost(LobbyBox.SelectedItem.ToString());
+
+            Application.Current.Dispatcher.BeginInvoke(
+            DispatcherPriority.Background,
+            new Action(() => {
+                while (true)
+                {
+                    if (Connector.GetInstance().GotGameBoard())
+                    {
+                        this.Hide();
+                        GameWindow gameWindow = new GameWindow(Connector.GetInstance().localGameBoard);
+                        gameWindow.Closed += (s, args) => this.Close();
+                        gameWindow.Show();
+                        break;
+                    }
+                }
+            }));
+            
         }
     }
 }

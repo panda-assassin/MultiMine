@@ -29,11 +29,14 @@ namespace Shared
     public enum MessageIDs
     {
         //ALL EXAMPLES!!! Use Better names later 
-        ClientConnected,
-        ClientDisconnected,
+        StartMultiplayerServer,
+        JoinMultiPlayerServer,
         SendAllClients,
         RequestAllClients,
         SendGameBoard,
-        SendChatMessage 
+        SendGameBoardMultiplayer,
+        SendChatMessage,
+        SendChatMessageMultiplayer,
+        SaveGame
     }
 }
