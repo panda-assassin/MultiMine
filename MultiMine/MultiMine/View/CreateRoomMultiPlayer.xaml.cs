@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultiMine.Controller;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,12 @@ namespace MultiMine {
         private void PlayerCountBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Connector.GetInstance().sendChatMessage(chat.Text);
+            chatview.Items.Add(chat.Text);
         }
     }
 }

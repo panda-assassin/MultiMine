@@ -34,6 +34,6 @@ namespace Shared
         SendAllClients,
         RequestAllClients,
         SendGameBoard,
-        SendChatMessage
+        SendChatMessage 
     }
 }

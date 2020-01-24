@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Shared;
+using Shared.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -86,6 +87,7 @@ namespace MultiMineServer {
                             switch (message.MessageID)
                             {
                                 case MessageIDs.SendGameBoard:
+                                    writeToFile(Encoding.ASCII.GetString(message.data));
                                     Console.WriteLine("GameBoard data sent");
                                     Console.WriteLine("Message data : " + message.Data);
                                     this.SendMessage(new ServerMessage(message.MessageID, message.Data));
@@ -152,6 +154,24 @@ namespace MultiMineServer {
             this.stream = null;
 
             Console.WriteLine("Client disconnected!");
+        }
+
+        private void writeToFile(string gameBoard)
+        {
+            File.WriteAllText(getPath() + "/Data/Data.txt", gameBoard);
+        }
+
+        private GameBoard readFromFile()
+        {
+            return (GameBoard)JsonConvert.DeserializeObject(System.IO.File.ReadAllText(getPath() + "Data/Data.txt"));
+        }
+
+        public static string getPath()
+        {
+            string startupPath = System.IO.Directory.GetCurrentDirectory();
+            string Startsplit = startupPath.Substring(0, startupPath.LastIndexOf("bin"));
+            string split = Startsplit.Replace(@"\", "/");
+            return split;
         }
     }
 }

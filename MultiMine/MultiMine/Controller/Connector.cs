@@ -11,8 +11,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MultiMine.Controller {
-    class Connector {
+namespace MultiMine.Controller
+{
+    class Connector
+    {
         private static Connector instance;
 
         public List<string> clients { get; set; }
@@ -178,6 +180,8 @@ namespace MultiMine.Controller {
         }
     }
 
+    
+}
 
 
   

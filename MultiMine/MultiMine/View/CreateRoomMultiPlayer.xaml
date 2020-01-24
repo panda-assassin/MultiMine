@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiMine"
         mc:Ignorable="d"
-        Title="CreateRoomMultiPlayer" Height="450" Width="800">
+        Title="CreateRoomMultiPlayer" Height="450" Width="800"
+        ResizeMode="NoResize">
     <Grid>
         <Label Content="Game Size:" Margin="100,100,0,0" VerticalAlignment="Top" Height="31" HorizontalAlignment="Left" Width="73"/>
         <Label Content="Game Difficulty:" Margin="100,150,0,0" VerticalAlignment="Top" Height="31" HorizontalAlignment="Left" Width="97"/>
@@ -32,13 +33,14 @@
             <ComboBoxItem Content="6"/>
 
         </ComboBox>
-        <ListView HorizontalAlignment="Left" Height="100" Margin="350,150,0,0" VerticalAlignment="Top" Width="150">
+        <ListView x:Name="chatview" HorizontalAlignment="Left" Height="100" Margin="350,150,0,0" VerticalAlignment="Top" Width="150">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
+        <TextBox x:Name="chat" HorizontalAlignment="Left" Height="23" Margin="350,255,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="148" TextChanged="TextBox_TextChanged"/>
 
     </Grid>
 </Window>

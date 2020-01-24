@@ -99,27 +99,5 @@ namespace MultiMineServer
             clients.Remove(client);
         }
 
-        private void writeToFile(GameBoard gameBoard)
-        {
-            string output = JsonConvert.SerializeObject(gameBoard);
-            using (System.IO.StreamWriter file =
-            new System.IO.StreamWriter(getPath() + "Data/Data.txt", true))
-            {
-                file.WriteLine(output);
-            }
-        }
-
-        private GameBoard readFromFile()
-        {
-            return (GameBoard)JsonConvert.DeserializeObject(System.IO.File.ReadAllText(getPath() + "Data/Data.txt"));
-        }
-        public static string getPath()
-        {
-            string startupPath = System.IO.Directory.GetCurrentDirectory();
-            string Startsplit = startupPath.Substring(0, startupPath.LastIndexOf("bin"));
-            string split = Startsplit.Replace(@"\", "/");
-            return split;
-        }
-
     }
 }
