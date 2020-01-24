@@ -199,4 +199,5 @@ namespace MultiMine.Controller
             return this.gotClients;
         }
     }
+}
 
