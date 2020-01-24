@@ -45,6 +45,11 @@ namespace MultiMine
 
         private void StartMultiMineGame_Click(object sender, RoutedEventArgs e)
         {
+            //TODO StartGame
+            this.Hide();
+            CreateRoomMultiPlayer createRoomMultiPlayer = new CreateRoomMultiPlayer();
+            createRoomMultiPlayer.Closed += (s, args) => this.Close();
+            createRoomMultiPlayer.Show();
             //TODO: Start create room_multiplayer
         }
     }

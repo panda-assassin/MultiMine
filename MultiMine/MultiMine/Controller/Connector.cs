@@ -15,6 +15,7 @@ namespace MultiMine.Controller {
     class Connector {
         private static Connector instance;
 
+        public List<string> clients { get; set; }
         private TcpClient client;
         private NetworkStream stream;
         private string firstHalfFromBuffer;
@@ -31,6 +32,8 @@ namespace MultiMine.Controller {
                 //client = new System.Net.Sockets.TcpClient("86.82.166.205", 1234); // Create a new connection
                 client = new System.Net.Sockets.TcpClient("127.0.0.1", 1234); // Create a new connection
                 stream = client.GetStream();
+
+                clients = new List<string>();
 
                 StartReading();
             }
@@ -55,7 +58,7 @@ namespace MultiMine.Controller {
         /// </summary>
         private void ReadMessage()
         {
-            byte[] buffer = new byte[80000];
+            byte[] buffer = new byte[1000000];
             stream.Read(buffer, 0, buffer.Length);
 
             string wholePacket = Encoding.Unicode.GetString(buffer);
@@ -94,13 +97,21 @@ namespace MultiMine.Controller {
 
             ServerMessage message = JsonConvert.DeserializeObject<ServerMessage>(stringMessage);
 
+            byte[] byteArray = message.Data;
+            string wholePacket = Encoding.ASCII.GetString(byteArray);
+
             switch (message.MessageID)
             {
                 case MessageIDs.SendGameBoard:
-                    byte[] byteArray = message.Data;
-                    string wholePacket = Encoding.ASCII.GetString(byteArray);
                     GameBoard gameBoard = JsonConvert.DeserializeObject<GameBoard>(wholePacket);
                     GameBoardManager.GetInstance().setGameBoard(gameBoard);
+                    break;
+                case MessageIDs.SendAllClients:
+                    string[] array = wholePacket.Split(new string[] { "--ID--" }, StringSplitOptions.None);
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        clients.Add(array[i]);
+                    }
                     break;
                 default:
                     break;
@@ -141,7 +152,34 @@ namespace MultiMine.Controller {
             byte[] byteArray = Encoding.ASCII.GetBytes(gameboardString);
             this.sendMessage(new ServerMessage(MessageIDs.SendGameBoard, byteArray));
             }
-            
+
+        public void connectClient()
+        {
+            string clientConnected = "true";
+            byte[] byteArray = Encoding.ASCII.GetBytes(clientConnected);
+            this.sendMessage(new ServerMessage(MessageIDs.ClientConnected, byteArray)) ;
         }
+
+        public void disconnectClient()
+        {
+            string clientConnected = "false";
+            byte[] byteArray = Encoding.ASCII.GetBytes(clientConnected);
+            this.sendMessage(new ServerMessage(MessageIDs.ClientDisconnected, byteArray));
+        }
+
+        public void requestClientList()
+        {
+            this.sendMessage(new ServerMessage(MessageIDs.RequestAllClients, null));
+        }
+
+        public void destroyInstance()
+        {
+            instance = null;
+        }
+    }
+
+
+
+  
     }
 

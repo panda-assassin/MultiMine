@@ -21,18 +21,19 @@ namespace MultiMineServer {
 
         private bool threadRunning;
 
-        private int uniqueID { get; set; }
+        public int uniqueID { get; set; }
 
-        private byte[] buffer = new byte[80000];
+        private byte[] buffer = new byte[1000000];
 
         string totalBuffer = "";
         public TcpClient TcpClient { get => tcpClient; set => tcpClient = value; }
 
-        public Client(TcpClient tcpClient, Server server)
+        public Client(TcpClient tcpClient, Server server, int uniqueID)
         {
             //setup initial connection
             this.tcpClient = tcpClient;
             this.server = server;
+            this.uniqueID = uniqueID;
 
             this.stream = tcpClient.GetStream();
             /*stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);*/
@@ -88,6 +89,20 @@ namespace MultiMineServer {
                                     Console.WriteLine("GameBoard data sent");
                                     Console.WriteLine("Message data : " + message.Data);
                                     this.SendMessage(new ServerMessage(message.MessageID, message.Data));
+                                    break;
+                                case MessageIDs.SendAllClients:
+                                    List<string> clientIDs = new List<string>();
+
+                                    foreach (Client client in server.Clients)
+                                    {
+                                        clientIDs.Add("--ID--" + client.uniqueID);
+                                    }
+
+                                    string toArray = clientIDs.ToString();
+
+                                    byte[] byteArray = Encoding.ASCII.GetBytes(toArray);
+
+                                    this.SendMessage(new ServerMessage((message.MessageID), byteArray));
                                     break;
                                 default:
                                     break;
