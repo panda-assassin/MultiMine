@@ -47,5 +47,10 @@ namespace MultiMine.Controller
         {
             return this.messages;
         }
+
+        public void clearChat()
+        {
+            this.messages.Clear();
+        }
     }
 }

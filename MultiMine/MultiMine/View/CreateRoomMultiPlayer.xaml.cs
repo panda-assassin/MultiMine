@@ -50,6 +50,7 @@ namespace MultiMine {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Closed += (s, args) => this.Close();
             mainWindow.Show();
+            ChatManager.GetInstance().clearChat();
         }
 
         private void PlayerCountBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

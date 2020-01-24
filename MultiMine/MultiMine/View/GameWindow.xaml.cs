@@ -20,7 +20,7 @@ namespace MultiMine
     /// <summary>
     /// Interaction logic for GameWindow.xaml
     /// </summary>
-    public partial class GameWindow : Window, GameBoardListener
+    public partial class GameWindow : Window, GameBoardListener, ChatListener
     {
         private int size;
         private int percentageMines;
@@ -37,8 +37,8 @@ namespace MultiMine
             this.size = size;
             this.percentageMines = percentageMines;
 
-            this.Width = (size + 2) * 32;
-            this.Height = (size + 3) * 32;
+           /* this.Width = (size + 10) * 32;
+            this.Height = (size + 10) * 32;*/
 
             //Initializing gameBoard
             double mines = size * size * (percentageMines / 100.0);
@@ -46,8 +46,15 @@ namespace MultiMine
             manager = GameBoardManager.GetInstance();
             manager.setListener(this);
             manager.setGameBoard(gameBoard);
-           
-            
+
+            ChatManager.GetInstance().setListener(this);
+            if (ChatManager.GetInstance().getChat() != null)
+            {
+                foreach (string message in ChatManager.GetInstance().getChat())
+                {
+                    chatview.Items.Add(message);
+                }
+            }
 
             //Initializing tileGrid
             mainGrid.Children.Clear();
@@ -162,10 +169,30 @@ namespace MultiMine
         {
             Connector.GetInstance().disconnectClient();
             Connector.GetInstance().destroyInstance();
+            ChatManager.GetInstance().clearChat();
             this.Hide();
             MainWindow mainWindow = new MainWindow();
             mainWindow.Closed += (s, args) => this.Close();
             mainWindow.Show();
+        }
+
+        private void chat_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Connector.GetInstance().sendChatMessage(chat.Text);
+                chat.Clear();
+            }
+        }
+
+        public void chatUpdated(string message)
+        {
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(
+            DispatcherPriority.Background,
+            new Action(() => {
+                chatview.Items.Add(message);
+            }));
+
         }
     }
 }
