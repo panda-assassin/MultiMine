@@ -18,6 +18,7 @@ namespace MultiMine.Controller
         private static Connector instance;
 
         public List<string> clients { get; set; }
+        public bool gotClients;
         private TcpClient client;
         private NetworkStream stream;
         private string firstHalfFromBuffer;
@@ -36,6 +37,7 @@ namespace MultiMine.Controller
                 stream = client.GetStream();
 
                 clients = new List<string>();
+                gotClients = false;
 
                 StartReading();
             }
@@ -109,11 +111,15 @@ namespace MultiMine.Controller
                     GameBoardManager.GetInstance().setGameBoard(gameBoard);
                     break;
                 case MessageIDs.SendAllClients:
-                    string[] array = wholePacket.Split(new string[] { "--ID--" }, StringSplitOptions.None);
+                    string[] array = wholePacket.Split('+');
                     for (int i = 0; i < array.Length; i++)
                     {
-                        clients.Add(array[i]);
+                        if (array[i] != "")
+                        {
+                            clients.Add(array[i]);
+                        }
                     }
+                    this.gotClients = true;
                     break;
                 case MessageIDs.SendChatMessage:
                     ChatManager.GetInstance().setChat(Encoding.ASCII.GetString(message.data));
@@ -187,8 +193,10 @@ namespace MultiMine.Controller
         {
             instance = null;
         }
+
+        public bool GotClients()
+        {
+            return this.gotClients;
+        }
     }
-
-
-}
 

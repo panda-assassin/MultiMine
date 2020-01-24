@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="Lobby" Height="450" Width="800">
     <Grid>
-        <Button Content="Join Lobby" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="186,136,0,0" Height="46"/>
-        <Button Content="Create Lobby" HorizontalAlignment="Left" Margin="485,136,0,0" VerticalAlignment="Top" Width="109" Height="46"/>
-        <ComboBox Name="LobbyBox"  HorizontalAlignment="Left" Margin="186,89,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="LobbyBox_SelectionChanged"/>
+        <Button Content="Join Lobby" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="186,136,0,0" Height="46" Click="JoinLobbyClick"/>
+        <Button Content="Create Lobby" HorizontalAlignment="Left" Margin="485,136,0,0" VerticalAlignment="Top" Width="109" Height="46" Click="CreateLobbyClick"/>
+        <ComboBox Name="LobbyBox"  HorizontalAlignment="Left" Margin="186,89,0,0" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>

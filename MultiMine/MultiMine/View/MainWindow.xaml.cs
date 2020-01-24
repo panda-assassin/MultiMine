@@ -1,4 +1,5 @@
 ﻿using MultiMine;
+using MultiMine.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,9 +48,9 @@ namespace MultiMine
         {
             //TODO StartGame
             this.Hide();
-            CreateRoomMultiPlayer createRoomMultiPlayer = new CreateRoomMultiPlayer();
-            createRoomMultiPlayer.Closed += (s, args) => this.Close();
-            createRoomMultiPlayer.Show();
+            Lobby lobby = new Lobby();
+            lobby.Closed += (s, args) => this.Close();
+            lobby.Show();
             //TODO: Start create room_multiplayer
         }
     }

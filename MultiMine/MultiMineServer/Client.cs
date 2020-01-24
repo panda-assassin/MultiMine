@@ -92,19 +92,18 @@ namespace MultiMineServer {
                                     Console.WriteLine("Message data : " + message.Data);
                                     this.SendMessage(new ServerMessage(message.MessageID, message.Data));
                                     break;
-                                case MessageIDs.SendAllClients:
+                                case MessageIDs.RequestAllClients:
                                     List<string> clientIDs = new List<string>();
+                                    string toArray = "";
 
                                     foreach (Client client in server.Clients)
                                     {
-                                        clientIDs.Add("--ID--" + client.uniqueID);
+                                        toArray = toArray + client.uniqueID + "+";
                                     }
 
-                                    string toArray = clientIDs.ToString();
-
                                     byte[] byteArray = Encoding.ASCII.GetBytes(toArray);
-
-                                    this.SendMessage(new ServerMessage((message.MessageID), byteArray));
+                                    Console.WriteLine("Clients Requested");
+                                    this.SendMessage(new ServerMessage((MessageIDs.SendAllClients), byteArray));
                                     break;
                                 case MessageIDs.SendChatMessage:
                                     Console.WriteLine("message data sent");
