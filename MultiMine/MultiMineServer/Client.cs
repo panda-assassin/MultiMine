@@ -37,31 +37,151 @@ namespace MultiMineServer {
             this.uniqueID = uniqueID;
 
             this.stream = tcpClient.GetStream();
-            /*stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);*/
+           
         }
 
-        public void StartClientThread()
+        public async void StartClientThread()
         {
             this.threadRunning = true;
-            this.runningThread = new Thread(Run);
-            this.runningThread.IsBackground = true;
-            this.runningThread.Start();
+            await Run2();
         }
 
         public void StopClientThread()
         {
             this.threadRunning = false;
-            this.runningThread.Abort();
+            //this.runningThread.Abort();
         }
 
-        private void Run()
+        private async Task Run2()
         {
+            await Task.Run(() =>
+            {
+                while (threadRunning)
+                {
+                    try
+                    {
+                        // Console.WriteLine("got data from client");
+                        /*                    int receivedBytes = stream.EndRead(ar);*/
+                        this.stream.Read(buffer, 0, buffer.Length);
+                        string wholePacket = Encoding.ASCII.GetString(buffer);
+                        string stringMessage = wholePacket.Replace("\0", "");
+
+                        string[] messages = stringMessage.Split(new string[] { Util.END_MESSAGE_KEY }, StringSplitOptions.None);
+                        for (int i = 0; i < messages.Length; i++)
+                        {
+                            // Console.WriteLine(messages[i]);
+                            try
+                            {
+                                if (messages[i] == "")
+                                {
+                                    // Console.WriteLine("Message Length is 0");
+                                    continue;
+
+
+                                }
+
+                                // Below: Example of how to use the message class in order to filter out the data send by the other applications.
+                                ServerMessage message = JsonConvert.DeserializeObject<ServerMessage>(messages[i]);
+                                // Console.WriteLine(message.Data);
+
+                                switch (message.MessageID)
+                                {
+                                    case MessageIDs.SendGameBoard:
+                                        Console.WriteLine("GameBoard data sent");
+                                        Console.WriteLine("Message data : " + message.Data);
+                                        this.SendMessage(new ServerMessage(message.MessageID, message.Data));
+                                        break;
+                                    case MessageIDs.RequestAllClients:
+                                        List<string> clientIDs = new List<string>();
+                                        string toArray = "";
+
+                                        foreach (Client client in server.Clients)
+                                        {
+                                            toArray = toArray + client.uniqueID + "+";
+                                        }
+
+                                        byte[] byteArray = Encoding.ASCII.GetBytes(toArray);
+                                        Console.WriteLine("Clients Requested");
+                                        this.SendMessage(new ServerMessage((MessageIDs.SendAllClients), byteArray));
+                                        break;
+                                    case MessageIDs.SendChatMessage:
+                                        Console.WriteLine("message data sent");
+                                        Console.WriteLine("Message data : " + Encoding.ASCII.GetString(message.data));
+                                        this.SendMessage(new ServerMessage(message.MessageID, message.Data));
+                                        break;
+                                    case MessageIDs.StartMultiplayerServer:
+                                        Room room = new Room(this, (server.Rooms.Count + 1));
+                                        room.StartRoomThread();
+                                        server.CreateRoom(room);
+                                        Console.WriteLine("Created Room with ID:" + server.getRoom(this).ID);
+                                        server.Clients.Remove(this);
+                                        break;
+                                    case MessageIDs.JoinMultiPlayerServer:
+                                        string roomHost = Encoding.ASCII.GetString(message.data);
+                                        server.joinRoom(this, roomHost);
+                                        Console.WriteLine("Client [" + this.uniqueID + "] joined room [" + roomHost + "]");
+                                        server.Clients.Remove(this);
+                                        break;
+                                    case MessageIDs.SaveGame:
+                                        writeToFile(Encoding.ASCII.GetString(message.data));
+                                        break;
+                                    case MessageIDs.GetRooms:
+                                        List<string> rooms = new List<string>();
+                                        string roomsToArray = "";
+
+                                        foreach (Room room2 in server.Rooms)
+                                        {
+                                            roomsToArray = roomsToArray + room2.ID + "+";
+                                        }
+
+                                        byte[] byteArray2 = Encoding.ASCII.GetBytes(roomsToArray);
+                                        Console.WriteLine("Rooms Requested");
+
+                                        this.SendMessage(new ServerMessage(MessageIDs.SendRooms, byteArray2));
+                                        break;
+                                    default:
+                                        break;
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+
+
+                        }
+                        if (this.stream == null)
+                        {
+                            this.server.DisconnectClient(this);
+                            this.StopClientThread();
+                            this.Disconnect();
+                        }
+
+                    }
+                    catch (SocketException ex)
+                    {
+                        //TODO: End the thread and stop the connection with the client.
+                        this.Disconnect();
+                    }
+                    catch (IOException ex)
+                    {
+                        this.Disconnect();
+                    }
+                }
+            });
+        }
+
+       /* private void Run()
+        {
+
+
             while (threadRunning)
             {
                 try
                 {
                     // Console.WriteLine("got data from client");
-/*                    int receivedBytes = stream.EndRead(ar);*/
+*//*                    int receivedBytes = stream.EndRead(ar);*//*
                     this.stream.Read(buffer, 0, buffer.Length);
                     string wholePacket = Encoding.ASCII.GetString(buffer);
                     string stringMessage = wholePacket.Replace("\0", "");
@@ -169,7 +289,7 @@ namespace MultiMineServer {
                     this.Disconnect();
                 }
             }
-        }
+        }*/
 
 
         public void SendMessage(ServerMessage message)

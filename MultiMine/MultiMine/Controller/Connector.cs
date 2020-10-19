@@ -246,6 +246,12 @@ namespace MultiMine.Controller
             byte[] byteArray = Encoding.ASCII.GetBytes(gameboardString);
             this.sendMessage(new ServerMessage(MessageIDs.SaveGame, byteArray));
         }
+
+        public void getRoom (String roomID)
+        {
+            byte[] byteArray = Encoding.ASCII.GetBytes(roomID);
+            this.sendMessage(new ServerMessage(MessageIDs.GetRoomID, byteArray));
+        }
     }
 }
 

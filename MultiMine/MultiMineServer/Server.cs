@@ -45,7 +45,7 @@ namespace MultiMineServer
             listener.BeginAcceptTcpClient(handleConnection, listener);
         }
 
-        private void handleConnection(IAsyncResult result)
+        private async void handleConnection(IAsyncResult result)
         {
             acceptConnection();
             TcpClient tcpClient = listener.EndAcceptTcpClient(result);

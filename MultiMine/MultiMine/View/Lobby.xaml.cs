@@ -53,6 +53,10 @@ namespace MultiMine.View {
         private void CreateLobbyClick(object sender, RoutedEventArgs e)
         {
             this.Hide();
+            Connector.GetInstance().createRoom();
+
+            // TODO: Request created room from server to know what room to show. 
+
             CreateRoomMultiPlayer multiPlayerRrom = new CreateRoomMultiPlayer();
             multiPlayerRrom.Closed += (s, args) => this.Close();
             multiPlayerRrom.Show();
@@ -60,8 +64,13 @@ namespace MultiMine.View {
 
         private void JoinLobbyClick(object sender, RoutedEventArgs e)
         {
-            Connector.GetInstance().joinHost(LobbyBox.SelectedItem.ToString());
+            
 
+            Connector.GetInstance().getRoom(LobbyBox.SelectedItem.ToString());
+
+            // TODO: Request created room from server to know what room to show. 
+
+            Connector.GetInstance().joinHost(LobbyBox.SelectedItem.ToString());
             Application.Current.Dispatcher.BeginInvoke(
             DispatcherPriority.Background,
             new Action(() => {

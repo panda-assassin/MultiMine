@@ -38,6 +38,7 @@ namespace Shared
         SendChatMessageMultiplayer,
         SaveGame,
         GetRooms,
-        SendRooms
+        SendRooms,
+        GetRoomID
     }
 }
