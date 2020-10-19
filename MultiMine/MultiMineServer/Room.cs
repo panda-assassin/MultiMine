@@ -13,17 +13,21 @@ using System.Threading.Tasks;
 namespace MultiMineServer {
     public class Room {
 
-        List<Client> RoomClients = new List<Client>();
+        List<Client> RoomClients;
         private bool threadRunning;
         private Thread runningThread;
 
         private GameBoard gameBoard;
 
+        public int ID;
+
         private byte[] buffer = new byte[1000000];
 
-        public Room(Client client)
+        public Room(Client client, int ID)
         {
+            this.RoomClients = new List<Client>();
             this.RoomClients.Add(client);
+            this.ID = ID;
         }
 
         public void joinRoom(Client client)
@@ -68,8 +72,6 @@ namespace MultiMineServer {
                                 {
                                     // Console.WriteLine("Message Length is 0");
                                     continue;
-
-
                                 }
 
                                 // Below: Example of how to use the message class in order to filter out the data send by the other applications.

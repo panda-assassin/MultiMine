@@ -23,6 +23,7 @@ namespace MultiMine {
         public CreateRoomMultiPlayer()
         {
             InitializeComponent();
+            Connector.GetInstance().createRoom();
             ChatManager.GetInstance().setListener(this);
             if (ChatManager.GetInstance().getChat() != null)
             {

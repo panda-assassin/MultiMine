@@ -19,6 +19,8 @@ namespace MultiMineServer
         private List<Client> clients = new List<Client>();
         private List<Room> rooms = new List<Room>();
 
+        public bool running;
+
         internal List<Client> Clients { get => clients; set => clients = value; }
         internal List<Room> Rooms { get => rooms; set => rooms = value; }
 
@@ -27,22 +29,30 @@ namespace MultiMineServer
             Console.WriteLine("Server started and listening.");
             Console.WriteLine("Type quit to exit.");
             StartServer();
+
+            Console.ReadLine();
         }
 
         public void StartServer()
         {
             listener = new TcpListener(IPAddress.Any, 1234);
             listener.Start();
-            Start();
+            acceptConnection();
         }
 
-        private void Start()
+        private void acceptConnection()
         {
+            listener.BeginAcceptTcpClient(handleConnection, listener);
+        }
+
+        private void handleConnection(IAsyncResult result)
+        {
+            acceptConnection();
+            TcpClient tcpClient = listener.EndAcceptTcpClient(result);
 
             int random = 0;
-            while (true)
-            {
-                TcpClient tcpClient = listener.AcceptTcpClient();
+            
+            
                 Random rand = new Random();
                 while (true)
                 {
@@ -53,9 +63,9 @@ namespace MultiMineServer
                         break;
                     }
                 }
-               
 
-                
+
+
                 Client client = new Client(tcpClient, this, random);
                 client.StartClientThread();
                 /*Thread tcpHandlerThread = new Thread(new ParameterizedThreadStart(tcpHandler));
@@ -64,7 +74,8 @@ namespace MultiMineServer
                 Console.WriteLine(tcpClient.GetStream());
 
                 clients.Add(client);
-            }
+            
+            
         }
 
         public Client getClient(int UniqueID)
@@ -76,6 +87,16 @@ namespace MultiMineServer
                 }
             }
             return null;
+        }
+
+        public void CreateRoom(Room room)
+        {
+            rooms.Add(room);
+        }
+
+        public void DeleteRoom(Room room)
+        {
+            rooms.Remove(room);
         }
 
         public Room getRoom(Client client)

@@ -207,6 +207,13 @@ namespace MultiMine.Controller
             return this.gameBoardReceived;
         }
 
+        public void createRoom()
+        {
+            string roomString = "Start room";
+            byte[] byteArray = Encoding.ASCII.GetBytes(roomString);
+            this.sendMessage(new ServerMessage(MessageIDs.StartMultiplayerServer, byteArray));
+        }
+
         public void saveGame(GameBoard gameBoard)
         {
             string gameboardString = JsonConvert.SerializeObject(gameBoard);

@@ -28,7 +28,6 @@ namespace Shared
 
     public enum MessageIDs
     {
-        //ALL EXAMPLES!!! Use Better names later 
         StartMultiplayerServer,
         JoinMultiPlayerServer,
         SendAllClients,

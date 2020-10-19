@@ -110,11 +110,12 @@ namespace MultiMineServer {
                                     this.SendMessage(new ServerMessage(message.MessageID, message.Data));
                                     break;
                                 case MessageIDs.StartMultiplayerServer:
-                                    Room room = new Room(this);
+                                    Room room = new Room(this, (server.Rooms.Count + 1));
                                     room.StartRoomThread();
-                                    server.Rooms.Add(room);
+                                    server.CreateRoom(room);
+                                    Console.WriteLine("Created Room with ID:" + server.getRoom(this).ID);
+                                    //server.Rooms.Add(room);
                                     server.Clients.Remove(this);
-                                    
                                     break;
                                 case MessageIDs.JoinMultiPlayerServer:
                                     string clientHost = Encoding.ASCII.GetString(message.data);
