@@ -18,7 +18,9 @@ namespace MultiMine.Controller
         private static Connector instance;
 
         public List<string> clients { get; set; }
+        public List<string> rooms { get; set; }
         public bool gotClients;
+        public bool gotRooms;
         private TcpClient client;
         private NetworkStream stream;
         private string firstHalfFromBuffer;
@@ -41,6 +43,9 @@ namespace MultiMine.Controller
 
                 clients = new List<string>();
                 gotClients = false;
+
+                rooms = new List<string>();
+                gotRooms = false;
 
                 StartReading();
             }
@@ -135,6 +140,17 @@ namespace MultiMine.Controller
                 case MessageIDs.SendChatMessageMultiplayer:
                     ChatManager.GetInstance().setChat(Encoding.ASCII.GetString(message.data));
                     break;
+                case MessageIDs.SendRooms:
+                    string[] array2 = wholePacket.Split('+');
+                    for (int i = 0; i < array2.Length; i++)
+                    {
+                        if (array2[i] != "")
+                        {
+                            rooms.Add(array2[i]);
+                        }
+                    }
+                    this.gotRooms = true;
+                    break;
                 default:
                     break;
             }
@@ -192,6 +208,11 @@ namespace MultiMine.Controller
             this.sendMessage(new ServerMessage(MessageIDs.RequestAllClients, null));
         }
 
+        public void requestRoomList()
+        {
+            this.sendMessage(new ServerMessage(MessageIDs.GetRooms, null));
+        }
+
         public void destroyInstance()
         {
             instance = null;
@@ -200,6 +221,11 @@ namespace MultiMine.Controller
         public bool GotClients()
         {
             return this.gotClients;
+        }
+
+        public bool GotRooms()
+        {
+            return this.gotRooms;
         }
 
         public bool GotGameBoard()

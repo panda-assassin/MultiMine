@@ -26,7 +26,7 @@ namespace MultiMine.View {
         {
             InitializeComponent();
 
-            Connector.GetInstance().requestClientList();
+            Connector.GetInstance().requestRoomList();
 
             Application.Current.Dispatcher.BeginInvoke(
             DispatcherPriority.Background,
@@ -34,14 +34,14 @@ namespace MultiMine.View {
 
                 while (true)
                 {
-                    if (Connector.GetInstance().GotClients())
+                    if (Connector.GetInstance().GotRooms())
                     {
-                        dataSource = Connector.GetInstance().clients;
+                        dataSource = Connector.GetInstance().rooms;
                         LobbyBox.DataContext = dataSource;
-                        foreach (string client in dataSource) {
-                            LobbyBox.Items.Add(client);
+                        foreach (string room in dataSource) {
+                            LobbyBox.Items.Add(room);
                             }
-                        Connector.GetInstance().gotClients = false;
+                        Connector.GetInstance().gotRooms = false;
                         break;
                     }
                 }

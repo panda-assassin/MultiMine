@@ -126,6 +126,20 @@ namespace MultiMineServer {
                                 case MessageIDs.SaveGame:
                                     writeToFile(Encoding.ASCII.GetString(message.data));
                                     break;
+                                case MessageIDs.GetRooms:
+                                    List<string> rooms = new List<string>();
+                                    string roomsToArray = "";
+
+                                    foreach (Room room2 in server.Rooms)
+                                    {
+                                        roomsToArray = roomsToArray + room2.ID + "+";
+                                    }
+
+                                    byte[] byteArray2 = Encoding.ASCII.GetBytes(roomsToArray);
+                                    Console.WriteLine("Rooms Requested");
+
+                                    this.SendMessage(new ServerMessage(MessageIDs.SendRooms, byteArray2));
+                                    break;
                                 default:
                                     break;
                             }
