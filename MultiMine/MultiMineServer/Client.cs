@@ -114,13 +114,12 @@ namespace MultiMineServer {
                                     room.StartRoomThread();
                                     server.CreateRoom(room);
                                     Console.WriteLine("Created Room with ID:" + server.getRoom(this).ID);
-                                    //server.Rooms.Add(room);
                                     server.Clients.Remove(this);
                                     break;
                                 case MessageIDs.JoinMultiPlayerServer:
-                                    string clientHost = Encoding.ASCII.GetString(message.data);
-                                    server.getRoom(server.getClient(Int32.Parse(clientHost))).joinRoom(this);
-                                    server.getRoom(server.getClient(Int32.Parse(clientHost))).sendGameRoomData(this);
+                                    string roomHost = Encoding.ASCII.GetString(message.data);
+                                    server.joinRoom(this, roomHost);
+                                    Console.WriteLine("Client [" + this.uniqueID + "] joined room [" + roomHost + "]");
                                     server.Clients.Remove(this);
                                     break;
                                 case MessageIDs.SaveGame:

@@ -111,6 +111,18 @@ namespace MultiMineServer
             return null;
         }
 
+        public void joinRoom(Client client, String roomID)
+        {
+            foreach (Room room in rooms)
+            {
+                if (room.ID.ToString() == roomID)
+                {
+                    room.joinRoom(client);
+                }
+            }
+            
+        }
+
         public void DisconnectClient(Client client)
         {
             RemoveClient(client);
