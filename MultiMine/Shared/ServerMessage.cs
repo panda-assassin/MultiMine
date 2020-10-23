@@ -39,6 +39,7 @@ namespace Shared
         SaveGame,
         GetRooms,
         SendRooms,
-        GetRoomID
+        GetRoomID,
+        RoomCreated
     }
 }

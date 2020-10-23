@@ -106,14 +106,16 @@ namespace MultiMineServer {
                                         break;
                                     case MessageIDs.SendChatMessage:
                                         Console.WriteLine("message data sent");
-                                        Console.WriteLine("Message data : " + message.Data); //Encoding.ASCII.GetString(message.data));
-                                        this.SendMessage(new ServerMessage(message.MessageID, message.Data));
+                                        Console.WriteLine("Message data : " + Encoding.ASCII.GetString(message.Data));
+                                        this.SendChatMessage(new ServerMessage(message.MessageID, message.Data));
                                         break;
                                     case MessageIDs.StartMultiplayerServer:
                                         Room room = new Room(this, (server.Rooms.Count + 1));
                                         room.StartRoomThread();
                                         server.CreateRoom(room);
                                         Console.WriteLine("Created Room with ID:" + server.getRoom(this).ID);
+                                        byte[] roomIDbyteArray = Encoding.ASCII.GetBytes(room.ID.ToString());
+                                        this.SendMessage(new ServerMessage(MessageIDs.RoomCreated, roomIDbyteArray));
                                         server.Clients.Remove(this);
                                         break;
                                     case MessageIDs.JoinMultiPlayerServer:
@@ -175,13 +177,44 @@ namespace MultiMineServer {
 
         public void SendMessage(ServerMessage message)
         {
-            foreach (Client client in server.Clients) {
-                stream = client.tcpClient.GetStream();
-            string toSend = JsonConvert.SerializeObject((message)) + Util.END_MESSAGE_KEY;
-            byte[] messageBytes = Encoding.Unicode.GetBytes(toSend);
-            this.stream.Write(messageBytes, 0, messageBytes.Length);
-        }
+           
+                    foreach (Client client in server.Clients)
+                    {
+                        stream = client.tcpClient.GetStream();
+                        string toSend = JsonConvert.SerializeObject((message)) + Util.END_MESSAGE_KEY;
+                        byte[] messageBytes = Encoding.Unicode.GetBytes(toSend);
+                        this.stream.Write(messageBytes, 0, messageBytes.Length);
+                    }
+
+                
             
+
+        }
+
+        public void SendChatMessage(ServerMessage message)
+        {
+            string totalMessageString = Encoding.ASCII.GetString(message.Data);
+            string[] totalMessageArray = totalMessageString.Split('-');
+
+            string messageRoomID = totalMessageArray[0];
+            string messageString = totalMessageArray[1];
+
+            foreach (Room room in server.Rooms)
+            {
+                if (room.ID.ToString() == messageRoomID)
+                {
+                    foreach (Client client in room.getRoomClients())
+                    {
+                        stream = client.tcpClient.GetStream();
+                        byte[] messageStringBytes = Encoding.Unicode.GetBytes(messageString);
+                        ServerMessage newMessage = new ServerMessage(MessageIDs.SendChatMessage, messageStringBytes);
+                        string toSend = JsonConvert.SerializeObject((newMessage)) + Util.END_MESSAGE_KEY;
+                        byte[] messageBytes = Encoding.Unicode.GetBytes(toSend);
+                        this.stream.Write(messageBytes, 0, messageBytes.Length);
+                    }
+
+                }
+            }
         }
 
 

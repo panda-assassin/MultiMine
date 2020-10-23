@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace MultiMineServer {
     public class Room {
 
-        List<Client> RoomClients;
+        List<Client> RoomClients { get; }
         private bool threadRunning;
         private Thread runningThread;
 

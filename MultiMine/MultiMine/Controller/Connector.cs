@@ -27,6 +27,8 @@ namespace MultiMine.Controller
         private string secondHalfFromBuffer;
         private bool incompleteMessage;
 
+        public string currentRoom { get; set; }
+
         public GameBoard localGameBoard;
         public bool gameBoardReceived;
 
@@ -130,7 +132,7 @@ namespace MultiMine.Controller
                     this.gotClients = true;
                     break;
                 case MessageIDs.SendChatMessage:
-                    ChatManager.GetInstance().setChat(Encoding.ASCII.GetString(message.data));
+                    ChatManager.GetInstance().setChat(Encoding.ASCII.GetString(message.Data));
                     break;
                 case MessageIDs.SendGameBoardMultiplayer:
                     GameBoard gameBoard2 = JsonConvert.DeserializeObject<GameBoard>(wholePacket);
@@ -150,6 +152,10 @@ namespace MultiMine.Controller
                         }
                     }
                     this.gotRooms = true;
+                    break;
+                case MessageIDs.RoomCreated:
+                    this.currentRoom = Encoding.ASCII.GetString(message.data);
+
                     break;
                 default:
                     break;
@@ -191,9 +197,10 @@ namespace MultiMine.Controller
             this.sendMessage(new ServerMessage(MessageIDs.SendGameBoard, byteArray));
         }
 
-        public void sendChatMessage(string message)
+        public void sendChatMessage(string message, string RoomID)
         {
-            byte[] byteArray = Encoding.ASCII.GetBytes(message);
+            string totalMessage = RoomID + "-" + message;
+            byte[] byteArray = Encoding.ASCII.GetBytes(totalMessage);
             this.sendMessage(new ServerMessage(MessageIDs.SendChatMessage, byteArray));
         }
 
@@ -238,6 +245,7 @@ namespace MultiMine.Controller
             string roomString = "Start room";
             byte[] byteArray = Encoding.ASCII.GetBytes(roomString);
             this.sendMessage(new ServerMessage(MessageIDs.StartMultiplayerServer, byteArray));
+
         }
 
         public void saveGame(GameBoard gameBoard)

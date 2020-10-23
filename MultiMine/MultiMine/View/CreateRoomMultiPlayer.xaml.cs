@@ -20,6 +20,8 @@ namespace MultiMine {
     /// Interaction logic for CreateRoomSinglePlayer.xaml
     /// </summary>
     public partial class CreateRoomMultiPlayer : Window , ChatListener {
+
+        string RoomID;
         public CreateRoomMultiPlayer()
         {
             InitializeComponent();
@@ -62,7 +64,7 @@ namespace MultiMine {
         {
             if (e.Key == Key.Enter)
             {
-                Connector.GetInstance().sendChatMessage(chat.Text);
+                Connector.GetInstance().sendChatMessage(chat.Text, Connector.GetInstance().currentRoom);
                 chat.Clear();
             }
         }
