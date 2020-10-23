@@ -64,9 +64,8 @@ namespace MultiMine.View {
 
         private void JoinLobbyClick(object sender, RoutedEventArgs e)
         {
-            
 
-            Connector.GetInstance().getRoom(LobbyBox.SelectedItem.ToString());
+            Connector.GetInstance().joinHost(LobbyBox.SelectedItem.ToString());
 
             this.Hide();
             CreateRoomMultiPlayer multiPlayerRrom = new CreateRoomMultiPlayer();
