@@ -133,5 +133,13 @@ namespace MultiMineServer
             clients.Remove(client);
         }
 
+        private void Broadcast(string message)
+        {
+            foreach (Client client in clients)
+            {
+
+            }
+        }
+
     }
 }

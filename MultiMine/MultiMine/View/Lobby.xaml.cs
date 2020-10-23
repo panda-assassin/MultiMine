@@ -68,25 +68,30 @@ namespace MultiMine.View {
 
             Connector.GetInstance().getRoom(LobbyBox.SelectedItem.ToString());
 
+            this.Hide();
+            CreateRoomMultiPlayer multiPlayerRrom = new CreateRoomMultiPlayer();
+            multiPlayerRrom.Closed += (s, args) => this.Close();
+            multiPlayerRrom.Show();
+
             // TODO: Request created room from server to know what room to show. 
 
-            Connector.GetInstance().joinHost(LobbyBox.SelectedItem.ToString());
-            Application.Current.Dispatcher.BeginInvoke(
-            DispatcherPriority.Background,
-            new Action(() => {
-                while (true)
-                {
-                    if (Connector.GetInstance().GotGameBoard())
-                    {
-                        this.Hide();
-                        GameWindow gameWindow = new GameWindow(Connector.GetInstance().localGameBoard);
-                        gameWindow.Closed += (s, args) => this.Close();
-                        gameWindow.Show();
-                        break;
-                    }
-                }
-            }));
-            
+            //Connector.GetInstance().joinHost(LobbyBox.SelectedItem.ToString());
+            //Application.Current.Dispatcher.BeginInvoke(
+            //DispatcherPriority.Background,
+            //new Action(() => {
+            //    while (true)
+            //    {
+            //        if (Connector.GetInstance().GotGameBoard())
+            //        {
+            //            this.Hide();
+            //            GameWindow gameWindow = new GameWindow(Connector.GetInstance().localGameBoard);
+            //            gameWindow.Closed += (s, args) => this.Close();
+            //            gameWindow.Show();
+            //            break;
+            //        }
+            //    }
+            //}));
+
         }
     }
 }
